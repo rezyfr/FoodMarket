@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -15,4 +16,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "AEJ Untitled"
 include(":app")
+include(":feature:auth")
+include(":domain:auth")
+include(":data:auth")
+
+include("core:network")
+include("core:ui")
  

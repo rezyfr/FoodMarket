@@ -1,22 +1,15 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    id("foodmarket.android.application")
+    id("foodmarket.android.application.compose")
+    id("foodmarket.android.hilt")
 }
 
 android {
-    namespace = "com.rezyfr.aejuntitled"
-    compileSdk = 33
-
-    defaultConfig {
-        applicationId = "com.rezyfr.aejuntitled"
-        minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+    namespace = "com.rezyfr.foodmarket"
 
     buildTypes {
         release {
@@ -37,7 +30,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:ui"))
+
+    implementation(project(":feature:auth"))
+    implementation(project(":data:auth"))
+    implementation(project(":domain:auth"))
+
     implementation(libs.androidx.core.ktx)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext.junit)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
 }

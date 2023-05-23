@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AEJ Untitled"
+rootProject.name = "Food Market"
 include(":app")
 include(":feature:auth")
 include(":domain:auth")

@@ -6,6 +6,7 @@ plugins {
     id("foodmarket.android.application")
     id("foodmarket.android.application.compose")
     id("foodmarket.android.hilt")
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -20,13 +21,6 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
@@ -39,4 +33,15 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }

@@ -13,7 +13,9 @@ val FMColor = lightColors(
     onPrimary = black100,
     onError = red500,
     secondary = grey500,
+    onSecondary = Color.White,
     surface = Color.White,
+    onSurface = black100,
     onBackground = black100,
     secondaryVariant = teal500,
 )

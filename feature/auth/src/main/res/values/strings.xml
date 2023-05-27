@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lbl_sign_in">Sign In</string>
+    <string name="lbl_sign_in_motto">Find your best ever meal</string>
+    <string name="lbl_sign_up">Create New Account</string>
+    <string name="lbl_email">Email Address</string>
+    <string name="hint_email">Type your email address</string>
+    <string name="lbl_password">Password</string>
+    <string name="hint_password">Type your password</string>
+</resources>

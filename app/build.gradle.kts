@@ -31,13 +31,14 @@ dependencies {
     implementation(project(":domain:auth"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-
+    implementation(libs.accompanist.navigation.animation)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)

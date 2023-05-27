@@ -54,9 +54,6 @@ class AndroidFeaturePlugin  : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewmodel-compose").get())
 
                 add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
-
-                add("implementation", libs.findLibrary("compose-destination").get())
-                add("ksp", libs.findLibrary("compose-destination-ksp").get())
             }
         }
     }

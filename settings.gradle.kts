@@ -22,4 +22,5 @@ include(":data:auth")
 
 include("core:network")
 include("core:ui")
+include("core:domain")
  

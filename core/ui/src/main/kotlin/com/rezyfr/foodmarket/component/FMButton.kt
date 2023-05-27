@@ -20,12 +20,14 @@ import com.rezyfr.foodmarket.theme.FoodMarketTheme
 fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String = "Button",
-    onClick: () -> Unit = {}
+    enabled: Boolean = true,
+    onClick: () -> Unit = {},
 ) {
     FMButton(
         modifier = modifier,
         text = text,
         type = ButtonType.PRIMARY,
+        enabled = enabled,
         onClick = onClick
     )
 }
@@ -63,6 +65,7 @@ fun FMButton(
     modifier: Modifier = Modifier,
     text: String = "Button",
     type: ButtonType = ButtonType.PRIMARY,
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
 ) {
     Button(
@@ -76,7 +79,8 @@ fun FMButton(
             pressedElevation = 0.dp,
             disabledElevation = 0.dp
         ),
-        contentPadding = PaddingValues(vertical = 12.dp, horizontal = 24.dp)
+        contentPadding = PaddingValues(vertical = 12.dp, horizontal = 24.dp),
+        enabled = enabled
     ) {
         Text(
             text = text,

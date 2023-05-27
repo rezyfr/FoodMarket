@@ -38,12 +38,6 @@ fun FMTextField(
         onValueChange = {
             onValueChange.invoke(it)
         },
-        label = {
-            Text(
-                text = hint,
-                style = MaterialTheme.typography.body1
-            )
-        },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
             textColor = MaterialTheme.colors.onSurface,
@@ -84,17 +78,12 @@ fun FMTextField(
         onValueChange = {
             onValueChange.invoke(it)
         },
-        label = {
-            Text(
-                text = hint,
-                style = MaterialTheme.typography.body1
-            )
-        },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
             textColor = MaterialTheme.colors.onSurface,
-            focusedBorderColor = MaterialTheme.colors.onSurface,
+            focusedBorderColor = MaterialTheme.colors.secondaryVariant,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            cursorColor = MaterialTheme.colors.onSurface,
         ),
         modifier = modifier
             .onFocusChanged { focusState = it.isFocused }
@@ -111,7 +100,7 @@ fun FMTextField(
                     color = MaterialTheme.colors.secondary
                 )
             )
-        }
+        },
     )
 }
 @Preview

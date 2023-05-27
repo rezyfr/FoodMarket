@@ -2,9 +2,14 @@
 <resources>
     <string name="lbl_sign_in">Sign In</string>
     <string name="lbl_sign_in_motto">Find your best ever meal</string>
-    <string name="lbl_sign_up">Create New Account</string>
+    <string name="lbl_sign_in_register">Sign Up</string>
+    <string name="lbl_sign_up">Sign Up</string>
     <string name="lbl_email">Email Address</string>
     <string name="hint_email">Type your email address</string>
     <string name="lbl_password">Password</string>
     <string name="hint_password">Type your password</string>
+    <string name="lbl_sign_up_motto">Register and eat</string>
+    <string name="lbl_continue">Continue</string>
+    <string name="hint_full_name">Type your full name</string>
+    <string name="lbl_full_name">Full Name</string>
 </resources>

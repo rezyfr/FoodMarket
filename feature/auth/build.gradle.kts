@@ -7,3 +7,7 @@ plugins {
 android {
     namespace = "com.rezyfr.foodmarket.feature.auth"
 }
+
+dependencies {
+    implementation(project(":domain:auth"))
+}

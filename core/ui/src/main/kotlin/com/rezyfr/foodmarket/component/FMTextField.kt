@@ -81,7 +81,7 @@ fun FMTextField(
         colors = TextFieldDefaults.outlinedTextFieldColors(
             backgroundColor = MaterialTheme.colors.surface,
             textColor = MaterialTheme.colors.onSurface,
-            focusedBorderColor = MaterialTheme.colors.onSurface,
+            focusedBorderColor = MaterialTheme.colors.secondaryVariant,
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
             cursorColor = MaterialTheme.colors.onSurface,
         ),

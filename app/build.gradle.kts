@@ -38,7 +38,7 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
-
+    implementation(libs.accompanist.navigation.animation)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)

@@ -68,6 +68,52 @@ fun FMTextField(
         }
     )
 }
+@Composable
+fun FMTextField(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    hint: String = "",
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    trailingIcon: (@Composable () -> Unit)? = null,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onValueChange: (String) -> Unit = {},
+) {
+    var focusState by remember { mutableStateOf(false) }
+    OutlinedTextField(
+        value = value,
+        onValueChange = {
+            onValueChange.invoke(it)
+        },
+        label = {
+            Text(
+                text = hint,
+                style = MaterialTheme.typography.body1
+            )
+        },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            backgroundColor = MaterialTheme.colors.surface,
+            textColor = MaterialTheme.colors.onSurface,
+            focusedBorderColor = MaterialTheme.colors.onSurface,
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+        ),
+        modifier = modifier
+            .onFocusChanged { focusState = it.isFocused }
+            .fillMaxWidth(),
+        visualTransformation = visualTransformation,
+        trailingIcon = trailingIcon,
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        singleLine = true,
+        textStyle = MaterialTheme.typography.body2,
+        shape = RoundedCornerShape(8.dp),
+        placeholder = {
+            Text(
+                text = if (focusState) "" else hint, style = MaterialTheme.typography.body1.copy(
+                    color = MaterialTheme.colors.secondary
+                )
+            )
+        }
+    )
+}
 @Preview
 @Composable
 fun FMTextFieldPreview() {

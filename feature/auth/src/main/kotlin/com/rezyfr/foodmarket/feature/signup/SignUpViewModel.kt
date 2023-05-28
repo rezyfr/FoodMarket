@@ -1,10 +1,14 @@
 package com.rezyfr.foodmarket.feature.signup
 
 import com.rezyfr.foodmarket.base.BaseFlowViewModel
+import com.rezyfr.foodmarket.core.domain.model.ViewError
+import com.rezyfr.foodmarket.core.domain.model.ViewResult
+import com.rezyfr.foodmarket.core.domain.utils.Either
 import com.rezyfr.foodmarket.domain.auth.model.SignUpParams
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -13,13 +17,15 @@ class SignUpViewModel @Inject constructor() :
     BaseFlowViewModel<SignUpViewState, SignUpViewEvent>() {
 
     private var signUpParams = MutableStateFlow(initialUi.params)
+    private var signUpResult = MutableStateFlow(initialUi.result)
     override val initialUi: SignUpViewState
         get() = SignUpViewState()
     override val uiFlow: Flow<SignUpViewState>
-        get() = signUpParams.map { params ->
+        get() = combine(signUpParams, signUpResult) { params, result ->
             SignUpViewState(
                 params = params,
-                isValidate = params.email.isNotEmpty() && params.password.isNotEmpty() && params.name.isNotEmpty()
+                isValidate = params.email.isNotEmpty() && params.password.isNotEmpty() && params.name.isNotEmpty(),
+                result = result
             )
         }
 
@@ -32,6 +38,7 @@ class SignUpViewModel @Inject constructor() :
     private fun onNameChanged(name: String) {
         signUpParams.value = signUpParams.value.copy(name = name)
     }
+
     override suspend fun handleEvent(event: SignUpViewEvent) {
         when (event) {
             is SignUpViewEvent.OnEmailChanged -> {
@@ -51,7 +58,8 @@ class SignUpViewModel @Inject constructor() :
 
 data class SignUpViewState(
     val params: SignUpParams = SignUpParams("", "", "", "", "", "", ""),
-    val isValidate: Boolean = false
+    val isValidate: Boolean = false,
+    val result: ViewResult<Unit> = ViewResult.Uninitialized,
 )
 
 sealed interface SignUpViewEvent {

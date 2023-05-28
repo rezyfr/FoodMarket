@@ -70,7 +70,8 @@ fun FMButton(
 ) {
     Button(
         onClick = onClick, colors = ButtonDefaults.buttonColors(
-            backgroundColor = type.backgroundColor
+            backgroundColor = type.backgroundColor,
+            disabledContentColor = type.textColor
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = modifier,
@@ -105,7 +106,7 @@ enum class ButtonType {
         get() = when (this) {
             PRIMARY -> MaterialTheme.colors.primary
             SECONDARY -> MaterialTheme.colors.secondary
-            DANGER -> MaterialTheme.colors.onError
+            DANGER -> MaterialTheme.colors.error
         }
 }
 @Preview

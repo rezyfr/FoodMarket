@@ -1,5 +1,8 @@
 package com.rezyfr.foodmarket.feature.signup
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,24 +10,39 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rezyfr.foodmarket.component.FMHeaderWithBackButton
+import com.rezyfr.foodmarket.component.FMSnackBar
 import com.rezyfr.foodmarket.component.FMTextField
 import com.rezyfr.foodmarket.component.PrimaryButton
 import com.rezyfr.foodmarket.component.VSpacer
+import com.rezyfr.foodmarket.component.rememberSnackBarState
+import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.feature.auth.R
+import com.rezyfr.foodmarket.feature.component.EmailTextField
+import com.rezyfr.foodmarket.feature.component.PasswordTextField
 import com.rezyfr.foodmarket.theme.FoodMarketTheme
 
 @Composable
@@ -49,7 +67,7 @@ fun SignUp(
 
     SignUpContent(
         state = viewState,
-        onContinueClicked = openAddressForm,
+        onContinueClicked = { viewModel.testError() } ,
         onBackClicked = onBackClicked,
         onEmailChanged = { viewModel.onEvent(SignUpViewEvent.OnEmailChanged(it)) },
         onPasswordChanged = { viewModel.onEvent(SignUpViewEvent.OnPasswordChanged(it)) },
@@ -76,21 +94,38 @@ fun SignUpContent(
             headerText = stringResource(id = R.string.lbl_sign_up),
             subtitleText = stringResource(id = R.string.lbl_sign_up_motto),
         )
-        Box(
-            modifier = Modifier
-                .height(24.dp)
-                .fillMaxWidth()
-                .background(color = MaterialTheme.colors.secondary.copy(alpha = 0.2f))
-        )
-        SignUpForm(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 24.dp),
-            onContinueClicked = onContinueClicked,
-            onEmailChanged = onEmailChanged,
-            onPasswordChanged = onPasswordChanged,
-            onNameChanged = onNameChanged,
-            state = state
-        )
+        LazyColumn(){
+            item {
+                Box(
+                    modifier = Modifier
+                        .height(24.dp)
+                        .fillMaxWidth()
+                        .background(color = MaterialTheme.colors.secondary.copy(alpha = 0.2f))
+                )
+            }
+            item {
+                SignUpForm(
+                    modifier = Modifier
+                        .fillParentMaxHeight()
+                        .padding(horizontal = 16.dp, vertical = 24.dp),
+                    onContinueClicked = onContinueClicked,
+                    onEmailChanged = onEmailChanged,
+                    onPasswordChanged = onPasswordChanged,
+                    onNameChanged = onNameChanged,
+                    state = state
+                )
+            }
+        }
+    }
+    val snackBarState = rememberSnackBarState()
+    FMSnackBar(
+        state =  snackBarState,
+        containerColor = MaterialTheme.colors.error
+    )
+    if (state.result is ViewResult.Error) {
+        LaunchedEffect(snackBarState) {
+            snackBarState.addMessage(state.result.viewError.message.orEmpty())
+        }
     }
 }
 @Composable
@@ -103,6 +138,10 @@ fun SignUpForm(
     state: SignUpViewState
 ) {
     Column(modifier = modifier) {
+        AddPhotoContainer(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        VSpacer(16)
         NameTextField(
             onNameChanged = onNameChanged,
             name = state.params.name
@@ -110,7 +149,8 @@ fun SignUpForm(
         VSpacer(16)
         EmailTextField(
             onEmailChanged = onEmailChanged,
-            email = state.params.email
+            email = state.params.email,
+            isError = state.result is ViewResult.Error && state.result.viewError.message.orEmpty().contains("Email")
         )
         VSpacer(16)
         PasswordTextField(onPasswordChanged = onPasswordChanged, password = state.params.password)
@@ -119,6 +159,52 @@ fun SignUpForm(
     }
 }
 @Composable
+fun AddPhotoContainer(
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .size(110.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(90.dp)
+                .background(color = Color(0xFFF0F0F0), shape = CircleShape)
+                .align(Alignment.Center)
+        ) {
+            Text(
+                text = stringResource(id = R.string.lbl_add_photo),
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight.Light,
+                color = MaterialTheme.colors.secondary,
+                modifier = Modifier.align(Alignment.Center),
+                textAlign = TextAlign.Center
+            )
+        }
+        CircleDashedBorder(
+            color = MaterialTheme.colors.secondary,
+            radius = 180f,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+@Composable
+fun CircleDashedBorder(
+    modifier: Modifier = Modifier,
+    color: Color,
+    radius: Float,
+) {
+    Canvas(modifier = modifier) {
+        drawCircle(
+            color = color, radius = radius, style = Stroke(
+                width = 2f,
+                pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
+            )
+        )
+    }
+}
+
+@Composable
 fun NameTextField(onNameChanged: (String) -> Unit, name: String) {
     Text(stringResource(id = R.string.lbl_full_name), style = MaterialTheme.typography.body1)
     VSpacer(4)
@@ -126,29 +212,6 @@ fun NameTextField(onNameChanged: (String) -> Unit, name: String) {
         value = name,
         hint = stringResource(id = R.string.hint_full_name),
         onValueChange = onNameChanged
-    )
-}
-@Composable
-fun EmailTextField(onEmailChanged: (String) -> Unit, email: String) {
-    Text(stringResource(id = R.string.lbl_email), style = MaterialTheme.typography.body1)
-    VSpacer(4)
-    FMTextField(
-        value = email,
-        hint = stringResource(id = R.string.hint_email),
-        keyboardType = KeyboardType.Email,
-        onValueChange = onEmailChanged
-    )
-}
-@Composable
-fun PasswordTextField(onPasswordChanged: (String) -> Unit, password: String) {
-    Text(stringResource(id = R.string.lbl_password), style = MaterialTheme.typography.body1)
-    VSpacer(4)
-    FMTextField(
-        value = password,
-        hint = stringResource(id = R.string.hint_password),
-        keyboardType = KeyboardType.Password,
-        onValueChange = onPasswordChanged,
-        visualTransformation = PasswordVisualTransformation(),
     )
 }
 @Composable
@@ -170,3 +233,4 @@ fun SignUpScreenPreview() {
         SignUpContent()
     }
 }
+//create circle dashed border with jetpack compose

@@ -70,6 +70,7 @@ fun FMTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     trailingIcon: (@Composable () -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
+    isError: Boolean = false,
     onValueChange: (String) -> Unit = {},
 ) {
     var focusState by remember { mutableStateOf(false) }
@@ -85,6 +86,7 @@ fun FMTextField(
             unfocusedBorderColor = MaterialTheme.colors.onSurface,
             cursorColor = MaterialTheme.colors.onSurface,
         ),
+        isError = isError,
         modifier = modifier
             .onFocusChanged { focusState = it.isFocused }
             .fillMaxWidth(),

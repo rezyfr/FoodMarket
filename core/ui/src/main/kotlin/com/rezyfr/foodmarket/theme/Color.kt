@@ -11,12 +11,13 @@ private val teal500 = Color(0xFF1ABC9C)
 val FMColor = lightColors(
     primary = yellow500,
     onPrimary = black100,
-    onError = red500,
+    onError = Color.White,
     secondary = grey500,
     onSecondary = Color.White,
     surface = Color.White,
     onSurface = black100,
     onBackground = black100,
     secondaryVariant = teal500,
-    background = Color.White
+    background = Color.White,
+    error = red500,
 )

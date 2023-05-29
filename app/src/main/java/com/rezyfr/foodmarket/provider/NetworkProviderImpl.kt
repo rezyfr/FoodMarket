@@ -1,5 +1,6 @@
 package com.rezyfr.foodmarket.provider
 
+import com.rezyfr.foodmarket.BuildConfig
 import com.rezyfr.foodmarket.core.network.NetworkProvider
 
 class NetworkProviderImpl : NetworkProvider {

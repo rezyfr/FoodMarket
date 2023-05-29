@@ -1,17 +1,18 @@
 package com.rezyfr.foodmarket.core.network.util
 
 import com.rezyfr.foodmarket.core.domain.model.CustomException
-import com.rezyfr.foodmarket.core.domain.model.ErrorResponse
+import com.rezyfr.foodmarket.core.network.model.ErrorResponse
 import com.rezyfr.foodmarket.core.domain.model.NetworkResponse
+import com.rezyfr.foodmarket.core.network.model.BaseResponse
 import java.net.HttpURLConnection
 
 @Throws(CustomException::class)
-fun <T> NetworkResponse<T, ErrorResponse>.handleResponse(): T {
+fun <T> NetworkResponse<BaseResponse<T>, ErrorResponse>.handleResponse(): T? {
     return when (this) {
-        is NetworkResponse.Success -> this.body
+        is NetworkResponse.Success -> this.body.result
         is NetworkResponse.ServerError -> throw CustomException(
             code = this.code,
-            message = this.body?.message.orEmpty()
+            message = this.body?.error?.message.orEmpty()
         )
 
         is NetworkResponse.NetworkError -> throw CustomException(

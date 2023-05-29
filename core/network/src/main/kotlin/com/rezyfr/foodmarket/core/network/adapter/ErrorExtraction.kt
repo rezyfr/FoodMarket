@@ -10,10 +10,9 @@ internal const val UNKNOWN_ERROR_RESPONSE_CODE = 520
 
 internal fun <E : Any> HttpException.extractFromHttpException(
     errorConverter: Converter<ResponseBody, E>
-): com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError<E> {
+): NetworkResponse.ServerError<E> {
     val error = response()?.errorBody()
     val responseCode = response()?.code() ?: UNKNOWN_ERROR_RESPONSE_CODE
-    val headers = response()?.headers()
     val errorBody = when {
         error == null -> null // No error content available
         error.contentLength() == 0L -> null // Error content is empty
@@ -22,18 +21,18 @@ internal fun <E : Any> HttpException.extractFromHttpException(
             errorConverter.convert(error)
         } catch (e: Exception) {
             // If unable to extract content, return with a null body and don't parse further
-            return com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(null, responseCode, headers)
+            return NetworkResponse.ServerError(null, responseCode)
         }
     }
-    return com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(errorBody, responseCode, headers)
+    return NetworkResponse.ServerError(errorBody, responseCode)
 }
 
 internal fun <S : Any, E : Any> Throwable.extractNetworkResponse(
     errorConverter: Converter<ResponseBody, E>
 ): NetworkResponse<S, E> {
     return when (this) {
-        is IOException -> com.rezyfr.foodmarket.core.domain.model.NetworkResponse.NetworkError(this)
+        is IOException -> NetworkResponse.NetworkError(this)
         is HttpException -> extractFromHttpException<E>(errorConverter)
-        else -> com.rezyfr.foodmarket.core.domain.model.NetworkResponse.UnknownError(this)
+        else -> NetworkResponse.UnknownError(this)
     }
 }

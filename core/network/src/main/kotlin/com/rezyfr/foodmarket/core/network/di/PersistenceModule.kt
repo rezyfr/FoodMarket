@@ -5,6 +5,7 @@ import com.rezyfr.foodmarket.core.network.pref.CommonPref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 object PersistenceModule {
     @Provides
     @Singleton
-    fun provideCommonPref(context: Context): CommonPref {
+    fun provideCommonPref(@ApplicationContext context: Context): CommonPref {
         return CommonPref(context)
     }
 }

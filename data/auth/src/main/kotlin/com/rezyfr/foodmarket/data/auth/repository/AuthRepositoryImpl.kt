@@ -10,8 +10,8 @@ import com.rezyfr.foodmarket.domain.auth.repository.AuthRepository
 class AuthRepositoryImpl(
     private val authService: AuthService
 ): AuthRepository {
-    override fun register(param: SignUpParams): SignUpResult {
+    override suspend fun register(param: SignUpParams): SignUpResult {
         val response = authService.register(param.fromSignupParams()).handleResponse()
-        return response.mapToSignUpResult()
+        return response!!.mapToSignUpResult()
     }
 }

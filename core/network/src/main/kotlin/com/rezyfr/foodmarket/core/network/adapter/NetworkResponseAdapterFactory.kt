@@ -25,9 +25,6 @@ class NetworkResponseAdapterFactory : CallAdapter.Factory() {
         val errorBodyConverter = retrofit.nextResponseBodyConverter<Any>(null, errorBodyType, annotations)
 
         return when (getRawType(returnType)) {
-            Deferred::class.java -> {
-                DeferredNetworkResponseAdapter<Any, Any>(successBodyType, errorBodyConverter)
-            }
 
             Call::class.java -> {
                 NetworkResponseAdapter<Any, Any>(successBodyType, errorBodyConverter)

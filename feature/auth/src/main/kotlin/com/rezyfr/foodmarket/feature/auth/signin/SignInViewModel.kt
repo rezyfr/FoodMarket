@@ -7,6 +7,7 @@ import com.rezyfr.foodmarket.domain.auth.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,14 +44,16 @@ class SignInViewModel @Inject constructor(
                     signInParams.value.email,
                     signInParams.value.password
                 )
-            ).fold(
-                {
-                    signInResult.value = Result.failure(it)
-                },
-                {
-                    signInResult.value = Result.success(Unit)
-                }
-            )
+            ).collectLatest {
+                it.fold(
+                    {
+                        signInResult.value = Result.failure(it)
+                    },
+                    {
+                        signInResult.value = Result.success(Unit)
+                    }
+                )
+            }
         }
     }
 

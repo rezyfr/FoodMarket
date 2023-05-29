@@ -37,15 +37,15 @@ internal object ResponseHandler {
 
         return if (response.isSuccessful) {
             if (body != null) {
-                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.Success(body, headers, code)
+                NetworkResponse.Success(body, code)
             } else {
                 // Special case: If the response is successful and the body is null, return a successful response
                 // if the service method declares the success body type as Unit. Otherwise, return a server error
                 if (successBodyType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
-                    com.rezyfr.foodmarket.core.domain.model.NetworkResponse.Success(Unit, headers, code) as NetworkResponse<S, E>
+                    NetworkResponse.Success(Unit, code) as NetworkResponse<S, E>
                 } else {
-                    com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(null, code, headers)
+                    NetworkResponse.ServerError(null, code)
                 }
             }
         } else {
@@ -55,9 +55,9 @@ internal object ResponseHandler {
                 } else {
                     errorConverter.convert(errorBody)
                 }
-                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(convertedBody, code, headers)
+                NetworkResponse.ServerError(convertedBody, code)
             } catch (ex: Exception) {
-                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.UnknownError(ex, code = code, headers = headers)
+                NetworkResponse.UnknownError(ex, code = code)
             }
             networkResponse
         }

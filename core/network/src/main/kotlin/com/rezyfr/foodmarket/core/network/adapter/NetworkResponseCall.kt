@@ -19,6 +19,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
     override fun enqueue(callback: Callback<NetworkResponse<S, E>>) = synchronized(this) {
         backingCall.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
+//                val networkResponse = ResponseHandler.handle(response, successBodyType, errorConverter)
                 val networkResponse = ResponseHandler.handle(response, successBodyType, errorConverter)
                 callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
             }

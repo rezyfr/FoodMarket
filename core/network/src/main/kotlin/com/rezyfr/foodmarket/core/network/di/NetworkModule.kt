@@ -2,7 +2,6 @@ package com.rezyfr.foodmarket.core.network.di
 
 import android.content.Context
 import com.rezyfr.foodmarket.core.network.BuildConfig
-import com.rezyfr.foodmarket.core.network.BuildConfig.BASE_URL
 import com.rezyfr.foodmarket.core.network.NetworkProvider
 import com.rezyfr.foodmarket.core.network.adapter.NetworkResponseAdapterFactory
 import com.rezyfr.foodmarket.core.network.interceptor.HeaderInterceptor
@@ -23,7 +22,6 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        context: Context,
         commonPref: CommonPref,
         interceptor: HttpLoggingInterceptor
     ): OkHttpClient {

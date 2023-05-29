@@ -67,7 +67,7 @@ fun SignUp(
 
     SignUpContent(
         state = viewState,
-//        onContinueClicked = { viewModel.testError() } ,
+        onContinueClicked = { viewModel.onEvent(SignUpViewEvent.OnSignUpClicked) } ,
         onBackClicked = onBackClicked,
         onEmailChanged = { viewModel.onEvent(SignUpViewEvent.OnEmailChanged(it)) },
         onPasswordChanged = { viewModel.onEvent(SignUpViewEvent.OnPasswordChanged(it)) },
@@ -118,15 +118,18 @@ fun SignUpContent(
         }
     }
     val snackBarState = rememberSnackBarState()
-    FMSnackBar(
-        state =  snackBarState,
-        containerColor = MaterialTheme.colors.error
-    )
     if (state.result is ViewResult.Error) {
         LaunchedEffect(snackBarState) {
             snackBarState.addMessage(state.result.viewError.message.orEmpty())
         }
+    } else if (state.result is ViewResult.Success) {
+        // handle
     }
+
+    FMSnackBar(
+        state =  snackBarState,
+        containerColor = MaterialTheme.colors.error,
+    )
 }
 @Composable
 fun SignUpForm(

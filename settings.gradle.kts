@@ -20,7 +20,7 @@ include(":feature:auth")
 include(":domain:auth")
 include(":data:auth")
 
-include("core:network")
-include("core:ui")
-include("core:domain")
+include(":core:network")
+include(":core:ui")
+include(":core:domain")
  

@@ -7,7 +7,8 @@ android {
     namespace = "com.rezyfr.foodmarket.core.network"
 }
 dependencies {
-    //retrofit
+    implementation(project(":core:domain"))
+
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.converterGson)
     implementation(libs.okhttp.okhttp)

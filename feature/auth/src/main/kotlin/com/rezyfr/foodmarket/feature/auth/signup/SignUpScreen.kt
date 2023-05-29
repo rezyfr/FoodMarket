@@ -67,7 +67,7 @@ fun SignUp(
 
     SignUpContent(
         state = viewState,
-        onContinueClicked = { viewModel.testError() } ,
+//        onContinueClicked = { viewModel.testError() } ,
         onBackClicked = onBackClicked,
         onEmailChanged = { viewModel.onEvent(SignUpViewEvent.OnEmailChanged(it)) },
         onPasswordChanged = { viewModel.onEvent(SignUpViewEvent.OnPasswordChanged(it)) },

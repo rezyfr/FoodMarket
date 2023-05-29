@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.core.network.model
+package com.rezyfr.foodmarket.core.domain.model
 
 data class ErrorResponse(
     val status: String? = null,

@@ -1,6 +1,6 @@
 package com.rezyfr.foodmarket.core.network.adapter
 
-import com.rezyfr.foodmarket.core.network.model.NetworkResponse
+import com.rezyfr.foodmarket.core.domain.model.NetworkResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -15,7 +15,7 @@ class NetworkResponseAdapterFactory : CallAdapter.Factory() {
         check(returnType is ParameterizedType) { "$returnType must be parameterized. Raw types are not supported" }
 
         val containerType = getParameterUpperBound(0, returnType)
-        if (getRawType(containerType) != NetworkResponse::class.java) {
+        if (getRawType(containerType) != com.rezyfr.foodmarket.core.domain.model.NetworkResponse::class.java) {
             return null
         }
 

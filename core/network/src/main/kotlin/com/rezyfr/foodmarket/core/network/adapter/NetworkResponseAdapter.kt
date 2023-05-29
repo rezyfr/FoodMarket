@@ -1,6 +1,6 @@
 package com.rezyfr.foodmarket.core.network.adapter
 
-import com.rezyfr.foodmarket.core.network.model.NetworkResponse
+import com.rezyfr.foodmarket.core.domain.model.NetworkResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.CallAdapter

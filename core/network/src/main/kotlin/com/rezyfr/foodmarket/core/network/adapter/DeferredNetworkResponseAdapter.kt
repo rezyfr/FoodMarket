@@ -1,6 +1,6 @@
 package com.rezyfr.foodmarket.core.network.adapter
 
-import com.rezyfr.foodmarket.core.network.model.NetworkResponse
+import com.rezyfr.foodmarket.core.domain.model.NetworkResponse
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import okhttp3.ResponseBody

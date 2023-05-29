@@ -1,6 +1,6 @@
 package com.rezyfr.foodmarket.core.network.adapter
 
-import com.rezyfr.foodmarket.core.network.model.NetworkResponse
+import com.rezyfr.foodmarket.core.domain.model.NetworkResponse
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Response
@@ -37,15 +37,15 @@ internal object ResponseHandler {
 
         return if (response.isSuccessful) {
             if (body != null) {
-                NetworkResponse.Success(body, headers, code)
+                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.Success(body, headers, code)
             } else {
                 // Special case: If the response is successful and the body is null, return a successful response
                 // if the service method declares the success body type as Unit. Otherwise, return a server error
                 if (successBodyType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
-                    NetworkResponse.Success(Unit, headers, code) as NetworkResponse<S, E>
+                    com.rezyfr.foodmarket.core.domain.model.NetworkResponse.Success(Unit, headers, code) as NetworkResponse<S, E>
                 } else {
-                    NetworkResponse.ServerError(null, code, headers)
+                    com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(null, code, headers)
                 }
             }
         } else {
@@ -55,9 +55,9 @@ internal object ResponseHandler {
                 } else {
                     errorConverter.convert(errorBody)
                 }
-                NetworkResponse.ServerError(convertedBody, code, headers)
+                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.ServerError(convertedBody, code, headers)
             } catch (ex: Exception) {
-                NetworkResponse.UnknownError(ex, code = code, headers = headers)
+                com.rezyfr.foodmarket.core.domain.model.NetworkResponse.UnknownError(ex, code = code, headers = headers)
             }
             networkResponse
         }

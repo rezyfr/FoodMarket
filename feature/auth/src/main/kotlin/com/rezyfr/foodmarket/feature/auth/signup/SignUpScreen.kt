@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.signup
+package com.rezyfr.foodmarket.feature.auth.signup
 
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -41,8 +41,8 @@ import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.core.ui.component.rememberSnackBarState
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.feature.auth.R
-import com.rezyfr.foodmarket.feature.component.EmailTextField
-import com.rezyfr.foodmarket.feature.component.PasswordTextField
+import com.rezyfr.foodmarket.feature.auth.component.EmailTextField
+import com.rezyfr.foodmarket.feature.auth.component.PasswordTextField
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 @Composable

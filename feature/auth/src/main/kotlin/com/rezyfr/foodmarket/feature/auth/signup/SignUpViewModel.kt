@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.signup
+package com.rezyfr.foodmarket.feature.auth.signup
 
 import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel
 import com.rezyfr.foodmarket.core.domain.model.ViewError

@@ -6,10 +6,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import com.rezyfr.foodmarket.feature.signin.SignInScreen
-import com.rezyfr.foodmarket.feature.signin.SignUpButton
-import com.rezyfr.foodmarket.feature.signup.SignUp
-import com.rezyfr.foodmarket.feature.signup.SignUpScreen
+import com.rezyfr.foodmarket.feature.auth.signin.SignInScreen
+import com.rezyfr.foodmarket.feature.auth.signin.SignUpButton
+import com.rezyfr.foodmarket.feature.auth.signup.SignUp
+import com.rezyfr.foodmarket.feature.auth.signup.SignUpScreen
 
 internal sealed class Screen(val route: String) {
     object SignIn : Screen("signin")

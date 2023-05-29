@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.component
+package com.rezyfr.foodmarket.feature.auth.component
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

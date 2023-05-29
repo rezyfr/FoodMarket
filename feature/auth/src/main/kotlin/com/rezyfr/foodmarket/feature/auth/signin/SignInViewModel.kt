@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.signin
+package com.rezyfr.foodmarket.feature.auth.signin
 
 import androidx.lifecycle.viewModelScope
 import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel

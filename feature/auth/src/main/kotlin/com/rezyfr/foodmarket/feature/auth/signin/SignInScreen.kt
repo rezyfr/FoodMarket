@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.signin
+package com.rezyfr.foodmarket.feature.auth.signin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,8 +24,8 @@ import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.SecondaryButton
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.feature.auth.R
-import com.rezyfr.foodmarket.feature.component.EmailTextField
-import com.rezyfr.foodmarket.feature.component.PasswordTextField
+import com.rezyfr.foodmarket.feature.auth.component.EmailTextField
+import com.rezyfr.foodmarket.feature.auth.component.PasswordTextField
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 @Composable

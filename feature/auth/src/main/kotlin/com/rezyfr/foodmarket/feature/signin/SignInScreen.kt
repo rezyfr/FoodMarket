@@ -19,14 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rezyfr.foodmarket.component.FMHeader
-import com.rezyfr.foodmarket.component.PrimaryButton
-import com.rezyfr.foodmarket.component.SecondaryButton
-import com.rezyfr.foodmarket.component.VSpacer
+import com.rezyfr.foodmarket.core.ui.component.FMHeader
+import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
+import com.rezyfr.foodmarket.core.ui.component.SecondaryButton
+import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.feature.auth.R
 import com.rezyfr.foodmarket.feature.component.EmailTextField
 import com.rezyfr.foodmarket.feature.component.PasswordTextField
-import com.rezyfr.foodmarket.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 @Composable
 fun SignInScreen(

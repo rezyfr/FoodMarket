@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.component.snackbar
+package com.rezyfr.foodmarket.core.ui.component.snackbar
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue

@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.component
+package com.rezyfr.foodmarket.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rezyfr.foodmarket.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 @Composable
 fun FMHeaderWithBackButton(

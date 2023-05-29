@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.component
+package com.rezyfr.foodmarket.core.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -37,7 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.rezyfr.foodmarket.component.snackbar.FMSnacbarkState
+import com.rezyfr.foodmarket.core.ui.component.snackbar.FMSnacbarkState
 import java.util.Timer
 import kotlin.concurrent.schedule
 

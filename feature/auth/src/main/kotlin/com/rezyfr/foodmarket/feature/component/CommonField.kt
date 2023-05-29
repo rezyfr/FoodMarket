@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import com.rezyfr.foodmarket.component.FMTextField
+import com.rezyfr.foodmarket.core.ui.component.FMTextField
 import com.rezyfr.foodmarket.feature.auth.R
 
 @Composable

@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.theme
+package com.rezyfr.foodmarket.core.ui.theme
 
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color

@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.base
+package com.rezyfr.foodmarket.core.ui.base
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.component
+package com.rezyfr.foodmarket.core.ui.component
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

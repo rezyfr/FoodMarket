@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.component
+package com.rezyfr.foodmarket.core.ui.component
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rezyfr.foodmarket.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 
 @Composable

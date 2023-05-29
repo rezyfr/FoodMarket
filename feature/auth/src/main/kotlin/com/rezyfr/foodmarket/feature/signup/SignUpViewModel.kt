@@ -1,6 +1,6 @@
 package com.rezyfr.foodmarket.feature.signup
 
-import com.rezyfr.foodmarket.base.BaseFlowViewModel
+import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel
 import com.rezyfr.foodmarket.core.domain.model.ViewError
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.core.domain.utils.Either

@@ -1,7 +1,7 @@
 package com.rezyfr.foodmarket.feature.signin
 
 import androidx.lifecycle.viewModelScope
-import com.rezyfr.foodmarket.base.BaseFlowViewModel
+import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel
 import com.rezyfr.foodmarket.domain.auth.model.SignInParams
 import com.rezyfr.foodmarket.domain.auth.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

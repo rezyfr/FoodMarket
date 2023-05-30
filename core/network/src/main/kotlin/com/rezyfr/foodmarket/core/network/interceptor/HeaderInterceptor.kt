@@ -14,7 +14,7 @@ class HeaderInterceptor constructor(private val pref: CommonPref) : Interceptor 
         } else {
             // add access token header
             val authRequest = originalRequest.newBuilder()
-                .addHeader("access-token", token)
+                .addHeader("Authorization", "Bearer $token")
                 .build()
             chain.proceed(authRequest)
         }

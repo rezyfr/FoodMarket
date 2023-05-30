@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.rezyfr.foodmarket.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

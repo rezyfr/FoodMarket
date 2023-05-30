@@ -7,3 +7,10 @@ plugins {
 android {
     namespace = "com.rezyfr.foodmarket.data.auth"
 }
+
+dependencies {
+    implementation(project(":core:network"))
+    implementation(project(":domain:auth"))
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.converterGson)
+}

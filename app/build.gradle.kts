@@ -9,6 +9,14 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+fun buildProperty(key: String, format: Boolean = false): String {
+    return if (format) {
+        String.format("\"%s\"", project.property(key) as String)
+    } else {
+        project.property(key) as String
+    }
+}
+
 android {
     namespace = "com.rezyfr.foodmarket"
 
@@ -21,10 +29,23 @@ android {
             )
         }
     }
+
+    flavorDimensions("env")
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            buildConfigField("String", "BASE_URL", buildProperty("BASE_URL_DEV"))
+        }
+        create("prod") {
+            dimension = "env"
+            buildConfigField("String", "BASE_URL", buildProperty("BASE_URL_PROD"))
+        }
+    }
 }
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:network"))
 
     implementation(project(":feature:auth"))
     implementation(project(":data:auth"))

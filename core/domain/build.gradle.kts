@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.rezyfr.foodmarket.core.domain"
 }
+
+dependencies {
+    api(libs.kotlinx.coroutines.core)
+}

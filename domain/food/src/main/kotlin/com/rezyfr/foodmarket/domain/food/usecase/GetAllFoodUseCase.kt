@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 class GetAllFoodUseCase @Inject constructor(
     private val foodRepository: FoodRepository
-) : UseCase<Nothing, List<FoodModel>>() {
-    override fun execute(params: Nothing): Flow<Either<ViewError, List<FoodModel>>> = flow {
+) : UseCase<Unit, List<FoodModel>>() {
+    override fun execute(params: Unit): Flow<Either<ViewError, List<FoodModel>>> = flow {
         val result = Either.Right(foodRepository.getFoods())
         emit(result)
     }

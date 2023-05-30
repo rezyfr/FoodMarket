@@ -10,10 +10,12 @@ import com.rezyfr.foodmarket.feature.auth.signin.SignInScreen
 import com.rezyfr.foodmarket.feature.auth.signin.SignUpButton
 import com.rezyfr.foodmarket.feature.auth.signup.SignUp
 import com.rezyfr.foodmarket.feature.auth.signup.SignUpScreen
+import com.rezyfr.foodmarket.feature.dashboard.DashboardScreen
 
 internal sealed class Screen(val route: String) {
     object SignIn : Screen("signin")
     object SignUp: Screen("signup")
+    object Dashboard: Screen("dashboard")
 }
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -29,12 +31,16 @@ internal fun FMNavigation(
         composable(Screen.SignIn.route) {
             SignInScreen(
                 openSignUp = { navController.navigate(Screen.SignUp.route) },
+                openHome = { navController.navigate(Screen.Dashboard.route) }
             )
         }
         composable(Screen.SignUp.route) {
             SignUpScreen(
                 onBackClicked = { navController.navigateUp() },
             )
+        }
+        composable(Screen.Dashboard.route) {
+            DashboardScreen()
         }
     }
 }

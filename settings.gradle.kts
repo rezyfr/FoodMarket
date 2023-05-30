@@ -21,6 +21,7 @@ include(":domain:auth")
 include(":data:auth")
 include(":domain:food")
 include(":data:food")
+include(":feature:dashboard")
 
 include(":core:network")
 include(":core:ui")

@@ -1,11 +1,10 @@
 package com.rezyfr.foodmarket.core.network.di
 
-import android.content.Context
 import com.rezyfr.foodmarket.core.network.BuildConfig
 import com.rezyfr.foodmarket.core.network.NetworkProvider
 import com.rezyfr.foodmarket.core.network.adapter.NetworkResponseAdapterFactory
 import com.rezyfr.foodmarket.core.network.interceptor.HeaderInterceptor
-import com.rezyfr.foodmarket.core.network.pref.CommonPref
+import com.rezyfr.foodmarket.core.persistence.source.DataStoreSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,13 +21,13 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        commonPref: CommonPref,
+        dataStore: DataStoreSource,
         interceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         val builder = OkHttpClient().newBuilder()
         // uncomment this if you're testing and don't want ok http to cache request or response
         // builder.cache(null)
-        builder.addInterceptor(HeaderInterceptor(commonPref))
+        builder.addInterceptor(HeaderInterceptor(dataStore))
         // add logging as last interceptor. remember interceptor are sequential
         builder.addInterceptor(interceptor)
 

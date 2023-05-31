@@ -19,8 +19,12 @@ include(":app")
 include(":feature:auth")
 include(":domain:auth")
 include(":data:auth")
+include(":domain:food")
+include(":data:food")
+include(":feature:dashboard")
 
 include(":core:network")
 include(":core:ui")
 include(":core:domain")
+include(":core:persistence")
  

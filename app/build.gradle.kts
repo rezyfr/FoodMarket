@@ -51,6 +51,8 @@ dependencies {
     implementation(project(":data:auth"))
     implementation(project(":domain:auth"))
 
+    implementation(project(":feature:dashboard"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.ktx)

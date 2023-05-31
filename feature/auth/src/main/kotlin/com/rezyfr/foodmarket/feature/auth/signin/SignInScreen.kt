@@ -19,10 +19,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.core.ui.component.FMHeader
+import com.rezyfr.foodmarket.core.ui.component.FMSnackBar
 import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.SecondaryButton
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
+import com.rezyfr.foodmarket.core.ui.component.rememberSnackBarState
 import com.rezyfr.foodmarket.feature.auth.R
 import com.rezyfr.foodmarket.feature.auth.component.EmailTextField
 import com.rezyfr.foodmarket.feature.auth.component.PasswordTextField
@@ -50,7 +53,7 @@ fun SignIn(
 
     SignInContent(
         state = viewState,
-        onSignInClicked = {},
+        onSignInClicked = { viewModel.onEvent(SignInViewEvent.OnSignInClicked) },
         onSignUpClicked = openSignUp,
         onEmailChanged = { viewModel.onEvent(SignInViewEvent.OnEmailChanged(it)) },
         onPasswordChanged = { viewModel.onEvent(SignInViewEvent.OnPasswordChanged(it)) },
@@ -66,14 +69,6 @@ fun SignInContent(
     onPasswordChanged: (String) -> Unit = {},
     openHome: () -> Unit = {}
 ) {
-    val scaffoldState = rememberScaffoldState()
-
-    state.result.onFailure {
-        LaunchedEffect(it.message) {
-            scaffoldState.snackbarHostState.showSnackbar(it.message ?: "Unknown error")
-        }
-    }
-
     Column(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -100,6 +95,19 @@ fun SignInContent(
             state = state
         )
     }
+    val snackBarState = rememberSnackBarState()
+    if (state.result is ViewResult.Error) {
+        LaunchedEffect(snackBarState) {
+            snackBarState.addMessage(state.result.viewError.message.orEmpty())
+        }
+    } else if (state.result is ViewResult.Success) {
+        openHome()
+    }
+
+    FMSnackBar(
+        state =  snackBarState,
+        containerColor = MaterialTheme.colors.error,
+    )
 }
 @Composable
 fun SignInForm(

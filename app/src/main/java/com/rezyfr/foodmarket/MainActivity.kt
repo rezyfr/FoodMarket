@@ -5,13 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.navigation.FMNavigation
+import com.rezyfr.foodmarket.ui.FMMainApp
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,10 +30,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun FMContent() {
         FoodMarketTheme {
-            val navController = rememberAnimatedNavController()
-            FMNavigation(
-                navController = navController
-            )
+            FMMainApp()
         }
     }
 }

@@ -6,5 +6,8 @@ data class UserDomainModel(
     val id: Int,
     val name: String,
     val profilePhotoUrl: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val currentTeamId: String? = null,
+    val emailVerifiedAt: String? = null,
+    val profilePhotoPath: String? = null,
 )

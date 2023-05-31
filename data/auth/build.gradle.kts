@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":core:network"))
+    implementation(project(":core:persistence"))
     implementation(project(":domain:auth"))
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.converterGson)

@@ -8,6 +8,7 @@ android {
 }
 dependencies {
     implementation(project(":core:domain"))
+    implementation(project(":core:persistence"))
 
     implementation(libs.retrofit.retrofit)
     implementation(libs.retrofit.converterGson)

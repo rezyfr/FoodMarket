@@ -1,8 +1,10 @@
 package com.rezyfr.foodmarket.feature.auth.signin
 
 import androidx.lifecycle.viewModelScope
+import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel
 import com.rezyfr.foodmarket.domain.auth.model.SignInParams
+import com.rezyfr.foodmarket.domain.auth.model.SignInResult
 import com.rezyfr.foodmarket.domain.auth.usecase.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -46,11 +48,11 @@ class SignInViewModel @Inject constructor(
                 )
             ).collectLatest {
                 it.fold(
-                    {
-                        signInResult.value = Result.failure(it)
+                    { error ->
+                        signInResult.value = ViewResult.Error(error)
                     },
-                    {
-                        signInResult.value = Result.success(Unit)
+                    { result ->
+                        signInResult.value = ViewResult.Success(result)
                     }
                 )
             }
@@ -76,7 +78,7 @@ class SignInViewModel @Inject constructor(
 
 data class SignInViewState(
     val params: SignInParams = SignInParams("", ""),
-    val result: Result<Unit> = Result.success(Unit)
+    val result: ViewResult<SignInResult> = ViewResult.Uninitialized
 )
 
 sealed interface SignInViewEvent {

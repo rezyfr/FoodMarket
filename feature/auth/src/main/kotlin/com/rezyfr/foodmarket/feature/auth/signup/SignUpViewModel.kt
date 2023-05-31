@@ -60,7 +60,7 @@ class SignUpViewModel @Inject constructor(
                 )
             ).collectLatest {
                 it.fold(
-                    { error -> signUpResult.value = ViewResult.Error(ViewError(error.message)) },
+                    { error -> signUpResult.value = ViewResult.Error(error) },
                     { result -> signUpResult.value = ViewResult.Success(result) }
                 )
             }

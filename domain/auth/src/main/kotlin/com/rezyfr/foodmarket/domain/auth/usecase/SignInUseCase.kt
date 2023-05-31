@@ -5,13 +5,17 @@ import com.rezyfr.foodmarket.core.domain.model.ViewError
 import com.rezyfr.foodmarket.core.domain.utils.Either
 import com.rezyfr.foodmarket.domain.auth.model.SignInParams
 import com.rezyfr.foodmarket.domain.auth.model.SignInResult
+import com.rezyfr.foodmarket.domain.auth.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SignInUseCase @Inject constructor() : UseCase<SignInParams, SignInResult>() {
+class SignInUseCase @Inject constructor(
+    private val authRepository: AuthRepository
+) : UseCase<SignInParams, SignInResult>() {
     override fun execute(params: SignInParams): Flow<Either<ViewError, SignInResult>> = flow {
-        val result = SignInResult(Unit)
+        val result = authRepository.login(params)
+        authRepository.saveToken(result.token)
         emit(Either.Right(result))
     }
 }

@@ -26,4 +26,5 @@ include(":feature:dashboard")
 include(":core:network")
 include(":core:ui")
 include(":core:domain")
+include(":core:persistence")
  

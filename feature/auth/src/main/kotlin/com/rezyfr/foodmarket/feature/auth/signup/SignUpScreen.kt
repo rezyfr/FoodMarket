@@ -123,7 +123,7 @@ fun SignUpContent(
             snackBarState.addMessage(state.result.viewError.message.orEmpty())
         }
     } else if (state.result is ViewResult.Success) {
-        // handle
+
     }
 
     FMSnackBar(

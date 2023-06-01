@@ -30,12 +30,10 @@ data class SignUpResponse(
     fun mapToSignUpResult() = SignUpResult(
         token = accessToken.orEmpty(),
         user = UserDomainModel(
-            createdAt = user?.createdAt.orEmpty(),
             email = user?.email.orEmpty(),
             id = user?.id ?: 0,
             name = user?.name.orEmpty(),
             profilePhotoUrl = user?.profilePhotoUrl.orEmpty(),
-            updatedAt = user?.updatedAt.orEmpty(),
         )
     )
 }

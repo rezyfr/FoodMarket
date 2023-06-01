@@ -15,10 +15,11 @@ import javax.inject.Singleton
 class FmDataStore @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = "fm_datastore"
     )
 
+    val dataStore: DataStore<Preferences> = appContext.dataStore
     suspend fun <T> put(
         key: Preferences.Key<T>,
         value: T
@@ -27,7 +28,6 @@ class FmDataStore @Inject constructor(
             it[key] = value
         }
     }
-
     suspend fun <T> remove(key: Preferences.Key<T>) {
         appContext.dataStore.edit {
             it.remove(key = key)

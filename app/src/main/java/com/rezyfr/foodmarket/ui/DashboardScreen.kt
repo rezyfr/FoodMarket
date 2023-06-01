@@ -1,14 +1,11 @@
-package com.rezyfr.foodmarket.feature.dashboard
+package com.rezyfr.foodmarket.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -17,9 +14,6 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
@@ -28,26 +22,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import com.rezyfr.foodmarket.feature.dashboard.R
 import com.rezyfr.foodmarket.feature.dashboard.navigation.DashboardNavigationScreen
+import com.rezyfr.foodmarket.navigation.FMNavigation
 
 @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(
+    modifier: Modifier = Modifier,
+) {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberAnimatedNavController(bottomSheetNavigator)
 
@@ -70,9 +67,7 @@ fun DashboardScreen() {
             )
         }
     ) {
-        Column(modifier = Modifier.padding(it)){
-
-        }
+        FMNavigation(Modifier.padding(it), navController)
     }
 }
 
@@ -107,26 +102,23 @@ private fun DashboardBottomNavICon(
     selected: Boolean,
     haveNotification: Boolean = false,
 ) {
-    val painter = if (selected) {
-        painterResource(id = item.selectedIconRes)
-    } else {
-        painterResource(id = item.iconRes)
-    }
+    val icon = if (selected) item.selectedIconRes else item.iconRes
 
     Box {
         if (haveNotification) {
             Box(
                 modifier = Modifier
-                    .background(color = MaterialTheme.colors.primaryVariant)
-                    .clip(CircleShape)
+                    .background(color = MaterialTheme.colors.primaryVariant, shape = CircleShape)
                     .size(6.dp)
                     .align(Alignment.TopEnd)
                     .padding(6.dp)
             )
         }
-        Icon(
-            painter = painter,
-            contentDescription = null
+        Image(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            contentScale = ContentScale.Fit,
         )
     }
 }

@@ -16,6 +16,7 @@ class SignInUseCase @Inject constructor(
     override fun execute(params: SignInParams): Flow<Either<ViewError, SignInResult>> = flow {
         val result = authRepository.login(params)
         authRepository.saveToken(result.token)
+        authRepository.saveUser(result.user)
         emit(Either.Right(result))
     }
 }

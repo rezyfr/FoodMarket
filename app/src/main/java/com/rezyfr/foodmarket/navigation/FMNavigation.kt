@@ -7,13 +7,13 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.rezyfr.foodmarket.feature.auth.signin.SignInScreen
-import com.rezyfr.foodmarket.feature.auth.signup.SignUp
-import com.rezyfr.foodmarket.feature.auth.signup.SignUpScreen
-import com.rezyfr.foodmarket.feature.dashboard.DashboardScreen
+import com.rezyfr.foodmarket.feature.dashboard.home.HomeScreen
+import com.rezyfr.foodmarket.ui.DashboardScreen
+import com.rezyfr.foodmarket.feature.dashboard.order.OrderScreen
+import com.rezyfr.foodmarket.feature.dashboard.profile.ProfileScreen
 
 internal sealed class Screen(val route: String) {
-    object Dashboard: Screen("dashboard")
+    object Home: Screen("home")
     object Order: Screen("order")
     object Profile: Screen("profile")
 }
@@ -21,21 +21,21 @@ internal sealed class Screen(val route: String) {
 @Composable
 internal fun FMNavigation(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberAnimatedNavController(),
+    navController: NavHostController,
 ) {
     AnimatedNavHost(
         navController = navController,
-        startDestination = Screen.Dashboard.route,
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
-        composable(Screen.Dashboard.route) {
-            DashboardScreen()
+        composable(Screen.Home.route) {
+            HomeScreen()
         }
         composable(Screen.Order.route) {
-            DashboardScreen()
+            OrderScreen()
         }
         composable(Screen.Profile.route) {
-            DashboardScreen()
+            ProfileScreen()
         }
     }
 }

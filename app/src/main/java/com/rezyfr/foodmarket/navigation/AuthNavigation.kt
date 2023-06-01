@@ -18,8 +18,9 @@ internal sealed class AuthScreen(val route: String) {
 @Composable
 internal fun AuthNavigation(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberAnimatedNavController(),
 ) {
+    val navController = rememberAnimatedNavController()
+
     AnimatedNavHost(
         navController = navController,
         startDestination = AuthScreen.SignIn.route,

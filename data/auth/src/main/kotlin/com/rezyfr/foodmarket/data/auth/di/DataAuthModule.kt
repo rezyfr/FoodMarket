@@ -1,5 +1,7 @@
 package com.rezyfr.foodmarket.data.auth.di
 
+import com.rezyfr.foodmarket.core.persistence.datastore.DataStoreKeys
+import com.rezyfr.foodmarket.core.persistence.datastore.FmDataStore
 import com.rezyfr.foodmarket.core.persistence.source.DataStoreSource
 import com.rezyfr.foodmarket.data.auth.AuthService
 import com.rezyfr.foodmarket.data.auth.repository.AuthRepositoryImpl
@@ -18,9 +20,10 @@ object DataAuthModule {
     @Provides
     fun provideAuthRepository(
         authService: AuthService,
-        dataStoreSource: DataStoreSource
+        dataStoreSource: FmDataStore,
+        dataStoreKeys: DataStoreKeys
     ): AuthRepository {
-        return AuthRepositoryImpl(authService, dataStoreSource)
+        return AuthRepositoryImpl(authService, dataStoreSource, dataStoreKeys)
     }
 
     @Singleton

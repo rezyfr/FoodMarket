@@ -9,5 +9,5 @@ android {
 dependencies {
     implementation(project(":core:domain"))
 
-    implementation(libs.androidx.dataStore.preferences)
+    api(libs.androidx.dataStore.preferences)
 }

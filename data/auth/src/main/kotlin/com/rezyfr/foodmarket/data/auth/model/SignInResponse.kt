@@ -37,7 +37,6 @@ data class SignInResponse(
     fun mapToSignInResult() = SignInResult(
         token = accessToken.orEmpty(),
         user = UserDomainModel(
-            createdAt = user?.createdAt.orEmpty(),
             currentTeamId = user?.currentTeamId.orEmpty(),
             email = user?.email.orEmpty(),
             emailVerifiedAt = user?.emailVerifiedAt.orEmpty(),
@@ -45,7 +44,6 @@ data class SignInResponse(
             name = user?.name.orEmpty(),
             profilePhotoPath = user?.profilePhotoPath.orEmpty(),
             profilePhotoUrl = user?.profilePhotoUrl.orEmpty(),
-            updatedAt = user?.updatedAt.orEmpty(),
         )
     )
 }

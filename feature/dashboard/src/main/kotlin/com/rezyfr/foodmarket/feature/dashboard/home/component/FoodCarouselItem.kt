@@ -26,7 +26,7 @@ import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
 
 @Composable
-fun FoodHorizontalItem(
+fun FoodCarouselItem(
     modifier: Modifier = Modifier,
     food: FoodModel,
 ) {
@@ -81,9 +81,9 @@ fun FoodHorizontalItem(
 }
 @Preview
 @Composable
-fun SecondaryButtonPreview() {
+fun FoodCarouselPreview() {
     FoodMarketTheme {
-        FoodHorizontalItem(
+        FoodCarouselItem(
             food = FoodModel.getDummy().first()
         )
     }

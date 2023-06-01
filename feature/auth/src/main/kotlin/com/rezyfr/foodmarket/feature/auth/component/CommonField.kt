@@ -25,7 +25,7 @@ fun EmailTextField(onEmailChanged: (String) -> Unit, email: String, isError: Boo
     )
 }
 @Composable
-fun PasswordTextField(onPasswordChanged: (String) -> Unit, password: String) {
+fun PasswordTextField(onPasswordChanged: (String) -> Unit, password: String, isError: Boolean = false) {
     Text(stringResource(id = R.string.lbl_password), style = MaterialTheme.typography.body1)
     FMTextField(
         value = password,
@@ -33,5 +33,6 @@ fun PasswordTextField(onPasswordChanged: (String) -> Unit, password: String) {
         keyboardType = KeyboardType.Password,
         onValueChange = onPasswordChanged,
         visualTransformation = PasswordVisualTransformation(),
+        isError = isError
     )
 }

@@ -153,10 +153,13 @@ fun SignUpForm(
         EmailTextField(
             onEmailChanged = onEmailChanged,
             email = state.params.email,
-            isError = state.result is ViewResult.Error && state.result.viewError.message.orEmpty().contains("Email")
+            isError = state.result is ViewResult.Error && state.result.viewError.message.orEmpty().contains("email")
         )
         VSpacer(16)
-        PasswordTextField(onPasswordChanged = onPasswordChanged, password = state.params.password)
+        PasswordTextField(
+            onPasswordChanged = onPasswordChanged, password = state.params.password,
+            isError = state.result is ViewResult.Error && state.result.viewError.message.orEmpty().contains("password")
+        )
         VSpacer(24)
         ContinueButton(onContinueClicked = onContinueClicked, isValidated = state.isValidate)
     }

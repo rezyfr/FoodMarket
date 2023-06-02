@@ -50,7 +50,7 @@ fun FoodCarouselItem(
             )
             Text(
                 text = food.name,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(
                     top = 12.dp,
                     start = 12.dp,

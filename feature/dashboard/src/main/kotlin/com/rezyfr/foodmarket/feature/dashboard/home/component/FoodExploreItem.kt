@@ -44,11 +44,11 @@ fun FoodExploreItem(
             painter = rememberAsyncImagePainter(model = food.picture),
             contentDescription = null,
             modifier = Modifier
+                .size(60.dp)
                 .background(
                     MaterialTheme.colors.secondary,
                     shape = RoundedCornerShape(8.dp)
-                )
-                .size(60.dp),
+                ),
             contentScale = ContentScale.FillBounds
         )
         HSpacer(12)
@@ -57,11 +57,11 @@ fun FoodExploreItem(
         ) {
             Text(
                 text = food.name,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.body1,
             )
             Text(
-                text = "IDR ${food.price.formatCurrency()}",
-                style = MaterialTheme.typography.body1,
+                text = food.price.formatCurrency(),
+                style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.secondary
             )
         }
@@ -83,7 +83,7 @@ fun FoodExploreItem(
 }
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun FoodExplorePreview() {
+fun FoodExploreItemPreview() {
     FoodMarketTheme {
         FoodExploreItem(
             food = FoodModel.getDummy().first()

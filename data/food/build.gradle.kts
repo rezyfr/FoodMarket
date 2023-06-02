@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rezyfr.foodmarket.data.auth"
+    namespace = "com.rezyfr.foodmarket.data.food"
 }
 
 dependencies {

@@ -48,10 +48,12 @@ dependencies {
     implementation(project(":core:network"))
 
     implementation(project(":feature:auth"))
-    implementation(project(":data:auth"))
     implementation(project(":domain:auth"))
+    implementation(project(":data:auth"))
 
     implementation(project(":feature:dashboard"))
+    implementation(project(":domain:food"))
+    implementation(project(":data:food"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)

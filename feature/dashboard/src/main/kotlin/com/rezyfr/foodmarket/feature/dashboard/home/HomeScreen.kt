@@ -1,6 +1,7 @@
 package com.rezyfr.foodmarket.feature.dashboard.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -31,24 +32,30 @@ import com.rezyfr.foodmarket.feature.dashboard.home.component.FoodExplore
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
+    openFoodDetail: (foodId: String) -> Unit = { }
 ) {
     Home(
-        viewModel = hiltViewModel()
+        viewModel = hiltViewModel(),
+        openFoodDetail = openFoodDetail
     )
 }
 @Composable
 fun Home(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    openFoodDetail: (foodId: String) -> Unit = { }
 ) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeContent(
-        state = viewState
+        state = viewState,
+        openFoodDetail = openFoodDetail
     )
 }
 @Composable
-fun HomeContent(state: HomeViewState) {
+fun HomeContent(
+    state: HomeViewState,
+    openFoodDetail: (foodId: String) -> Unit = { }
+) {
     Column(
         Modifier
             .background(MaterialTheme.colors.background)
@@ -56,13 +63,14 @@ fun HomeContent(state: HomeViewState) {
             .fillMaxHeight()
     ) {
         Header(Modifier, state)
-        FoodCarousel(Modifier, state)
-        FoodExplore(Modifier, state)
+        FoodCarousel(Modifier, openFoodDetail, state)
+        FoodExplore(Modifier, openFoodDetail, state)
     }
 }
 @Composable
 fun FoodCarousel(
     modifier: Modifier = Modifier,
+    openFoodDetail: (foodId: String) -> Unit = { },
     state: HomeViewState
 ) {
     LazyRow(
@@ -75,7 +83,10 @@ fun FoodCarousel(
             is ViewResult.Success -> {
                 itemsIndexed(state.foods.data) { index, food ->
                     if (index == 0) HSpacer(16)
-                    FoodCarouselItem(food = food)
+                    FoodCarouselItem(
+                        food = food,
+                        modifier = Modifier.clickable { openFoodDetail(food.id) }
+                    )
                     if (index == state.foods.data.lastIndex) HSpacer(16)
                 }
             }

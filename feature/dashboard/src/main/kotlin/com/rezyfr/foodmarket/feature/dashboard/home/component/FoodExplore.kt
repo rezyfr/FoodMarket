@@ -2,6 +2,7 @@ package com.rezyfr.foodmarket.feature.dashboard.home.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoodExplore(
     modifier: Modifier = Modifier,
+    openFoodDetail: (foodId: String) -> Unit = { },
     state: HomeViewState
 ) {
     val pagerState = rememberPagerState()
@@ -43,6 +45,7 @@ fun FoodExplore(
     FoodExploreContent(
         modifier = modifier,
         state = state,
+        openFoodDetail = openFoodDetail,
         pagerState = pagerState,
         coroutineScope = coroutineScope
     )
@@ -52,6 +55,7 @@ fun FoodExplore(
 fun FoodExploreContent(
     modifier: Modifier = Modifier,
     state: HomeViewState = HomeViewState(),
+    openFoodDetail: (foodId: String) -> Unit = { },
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
     selectedTab: Int = 0
@@ -66,7 +70,10 @@ fun FoodExploreContent(
                     .height(1.dp)
                     .background(color = MaterialTheme.colors.secondary.copy(alpha = 0.5f))
             )
-            FMTabRow(selectedTabIndex = selectedTab, modifier = Modifier.padding(horizontal = 16.dp)) {
+            FMTabRow(
+                selectedTabIndex = selectedTab,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
                 listOf("New Taste", "Popular", "Recommended").forEachIndexed { index, title ->
                     FMTab(
                         selected = selectedTab == index,
@@ -80,9 +87,9 @@ fun FoodExploreContent(
         }
         HorizontalPager(pageCount = 3, state = pagerState) { page ->
             when (page) {
-                0 -> FoodExploreList(state = state)
-                1 -> FoodExploreList(state = state)
-                2 -> FoodExploreList(state = state)
+                0 -> FoodExploreList(state = state, openFoodDetail = openFoodDetail)
+                1 -> FoodExploreList(state = state, openFoodDetail = openFoodDetail)
+                2 -> FoodExploreList(state = state, openFoodDetail = openFoodDetail)
             }
         }
     }
@@ -90,6 +97,7 @@ fun FoodExploreContent(
 @Composable
 fun FoodExploreList(
     modifier: Modifier = Modifier,
+    openFoodDetail: (foodId: String) -> Unit = { },
     state: HomeViewState
 ) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = modifier) {
@@ -97,7 +105,10 @@ fun FoodExploreList(
             is ViewResult.Success -> {
                 itemsIndexed(state.foods.data) { index, food ->
                     if (index == 0) VSpacer(16)
-                    FoodExploreItem(food = food)
+                    FoodExploreItem(
+                        food = food,
+                        modifier = Modifier.clickable { openFoodDetail(food.id) }
+                    )
                     if (index == state.foods.data.lastIndex) VSpacer(16)
                 }
             }

@@ -14,4 +14,7 @@ interface FoodRepository {
             rateTo: Int,
         **/
     ): List<FoodModel>
+    suspend fun getFoodById(
+        id: String
+    ) : FoodModel
 }

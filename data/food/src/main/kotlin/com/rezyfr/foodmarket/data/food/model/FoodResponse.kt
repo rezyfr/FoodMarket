@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
 
 data class FoodResponse(
+    @SerializedName("id")
+    val id: String?,
     @SerializedName("picturePath")
     val picturePath: String?,
     @SerializedName("name")
@@ -23,6 +25,7 @@ data class FoodResponse(
         fun List<FoodResponse>.mapToFoodModel(): List<FoodModel> {
             return this.map {
                 FoodModel(
+                    id = it.id.orEmpty(),
                     picture = it.picturePath.orEmpty(),
                     name = it.name.orEmpty(),
                     desc = it.description.orEmpty(),

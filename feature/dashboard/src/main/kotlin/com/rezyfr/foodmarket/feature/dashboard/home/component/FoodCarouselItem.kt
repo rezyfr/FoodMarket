@@ -31,6 +31,7 @@ fun FoodCarouselItem(
     food: FoodModel,
 ) {
     Card(
+        modifier,
         backgroundColor = Color.White,
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp

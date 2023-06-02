@@ -18,7 +18,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
@@ -28,6 +27,7 @@ import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.domain.auth.model.UserDomainModel
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
 import com.rezyfr.foodmarket.feature.dashboard.home.component.FoodCarouselItem
+import com.rezyfr.foodmarket.feature.dashboard.home.component.FoodExplore
 
 @Composable
 fun HomeScreen(
@@ -37,7 +37,6 @@ fun HomeScreen(
         viewModel = hiltViewModel()
     )
 }
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun Home(
     viewModel: HomeViewModel
@@ -57,11 +56,12 @@ fun HomeContent(state: HomeViewState) {
             .fillMaxHeight()
     ) {
         Header(Modifier, state)
+        FoodCarousel(Modifier, state)
         FoodExplore(Modifier, state)
     }
 }
 @Composable
-fun FoodExplore(
+fun FoodCarousel(
     modifier: Modifier = Modifier,
     state: HomeViewState
 ) {

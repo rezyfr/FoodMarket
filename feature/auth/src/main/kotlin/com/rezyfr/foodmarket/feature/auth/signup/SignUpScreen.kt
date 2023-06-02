@@ -1,7 +1,5 @@
 package com.rezyfr.foodmarket.feature.auth.signup
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -15,8 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithBackButton
 import com.rezyfr.foodmarket.core.ui.component.FMSnackBar
@@ -56,7 +51,6 @@ fun SignUpScreen(
         openAddressForm = openAddressForm
     )
 }
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SignUp(
     viewModel: SignUpViewModel,

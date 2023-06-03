@@ -1,8 +1,5 @@
 package com.rezyfr.foodmarket.feature.order.food
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,7 +39,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
-import com.rezyfr.foodmarket.core.ui.component.FMButton
 import com.rezyfr.foodmarket.core.ui.component.HSpacer
 import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.RatingBar
@@ -49,12 +46,14 @@ import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.core.ui.util.formatCurrency
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
+import com.rezyfr.foodmarket.domain.order.model.PaymentParams
 import com.rezyfr.foodmarket.feature.order.R
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun FoodDetailScreen(
     navigateUp: () -> Unit = {},
-    openPayment: () -> Unit = {}
+    openPayment: (PaymentParams, String, String) -> Unit = { _, _, _ -> }
 ) {
     FoodDetail(
         viewModel = hiltViewModel(),
@@ -66,15 +65,21 @@ fun FoodDetailScreen(
 fun FoodDetail(
     viewModel: FoodDetailViewModel,
     navigateUp: () -> Unit,
-    openPayment: () -> Unit
+    openPayment: (PaymentParams, String, String) -> Unit = { _, _, _ -> }
 ) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    LaunchedEffect(key1 = true) {
+        viewModel.effect.collectLatest {
+            when (it) {
+                is FoodDetailViewEffect.OpenPaymentScreen -> openPayment(it.data, it.foodName, it.foodImage)
+            }
+        }
+    }
     FoodDetailContent(
         state = viewState,
         navigateUp = navigateUp,
         changeQty = { viewModel.onEvent(FoodDetailEvent.ChangeQty(it)) },
-        openPayment = openPayment
+        openPayment = { viewModel.onEvent(FoodDetailEvent.OnOrderClicked) }
     )
 }
 @Composable
@@ -82,7 +87,7 @@ fun FoodDetailContent(
     state: FoodDetailViewState,
     navigateUp: () -> Unit = {},
     changeQty: (Boolean) -> Unit = {},
-    openPayment: () -> Unit = {},
+    openPayment: () -> Unit = {}
 ) {
     BoxWithConstraints(Modifier.fillMaxSize()) {
         if (state.food is ViewResult.Success) {
@@ -145,19 +150,24 @@ fun FoodDetailBody(
                 modifier = Modifier,
                 price = orderParams.total.toLong(),
             )
-            OrderButton(onClick = { openPayment() })
+            OrderButton(
+                onClick = { openPayment() },
+                isEnabled = orderParams.total > 0
+            )
         }
     }
 }
 @Composable
 fun OrderButton(
     modifier: Modifier = Modifier,
+    isEnabled: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     PrimaryButton(
         modifier = modifier,
         text = stringResource(id = R.string.lbl_order_now),
-        onClick = onClick
+        onClick = onClick,
+        enabled = isEnabled
     )
 }
 @Composable
@@ -287,7 +297,7 @@ fun FoodDetailHeader(
             Icons.Filled.ChevronLeft,
             contentDescription = null,
             tint = Color.White,
-            modifier = Modifier.padding(24.dp)
+            modifier = Modifier.padding(24.dp).size(48.dp)
         )
     }
 }

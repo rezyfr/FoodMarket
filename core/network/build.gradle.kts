@@ -11,7 +11,7 @@ dependencies {
     implementation(project(":core:persistence"))
 
     implementation(libs.retrofit.retrofit)
-    implementation(libs.retrofit.converterGson)
+    api(libs.retrofit.converterGson)
     implementation(libs.okhttp.okhttp)
     implementation(libs.okhttp.logging)
 }

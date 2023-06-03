@@ -23,6 +23,7 @@ include(":domain:food")
 include(":data:food")
 include(":feature:dashboard")
 include(":feature:order")
+include(":domain:order")
 
 include(":core:network")
 include(":core:ui")

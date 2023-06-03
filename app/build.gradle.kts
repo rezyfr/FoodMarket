@@ -56,6 +56,8 @@ dependencies {
     implementation(project(":data:food"))
 
     implementation(project(":feature:order"))
+    implementation(project(":domain:order"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.lifecycle.runtime.ktx)

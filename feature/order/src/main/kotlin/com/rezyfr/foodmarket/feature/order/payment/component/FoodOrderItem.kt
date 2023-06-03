@@ -1,4 +1,4 @@
-package com.rezyfr.foodmarket.feature.dashboard.home.component
+package com.rezyfr.foodmarket.feature.order.payment.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -6,42 +6,39 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.rezyfr.foodmarket.core.ui.component.HSpacer
-import com.rezyfr.foodmarket.core.ui.component.RatingBar
-import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.core.ui.util.formatCurrency
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
+import com.rezyfr.foodmarket.domain.order.model.PaymentParams
 
 @Composable
-fun FoodExploreItem(
+internal fun FoodOrderItem(
     modifier: Modifier = Modifier,
-    food: FoodModel,
+    params: PaymentParams,
+    name: String,
+    image: String
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth().padding(
-            horizontal = 24.dp
-        )
+        modifier = Modifier
+            .fillMaxWidth()
     ) {
         Image(
-            painter = rememberAsyncImagePainter(model = food.picture),
+            painter = rememberAsyncImagePainter(model = image),
             contentDescription = null,
             modifier = Modifier
                 .size(60.dp)
@@ -56,37 +53,32 @@ fun FoodExploreItem(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = food.name,
+                text = name,
                 style = MaterialTheme.typography.body1,
             )
             Text(
-                text = food.price.formatCurrency(),
+                text = params.total.toLong().formatCurrency(),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.secondary
             )
         }
-        Row(
+        Text(
+            text = "${params.quantity} items",
+            style = MaterialTheme.typography.caption,
+            color = MaterialTheme.colors.secondary,
             modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.End
-        ) {
-            RatingBar(
-                rating = food.rate
-            )
-            HSpacer(4)
-            Text(
-                text = "${food.rate}",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.secondary
-            )
-        }
+            textAlign = TextAlign.End
+        )
     }
 }
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun FoodExploreItemPreview() {
     FoodMarketTheme {
-        FoodExploreItem(
-            food = FoodModel.getDummy().first()
+        FoodOrderItem(
+            name = "Food 1",
+            image = "",
+            params = PaymentParams.empty()
         )
     }
 }

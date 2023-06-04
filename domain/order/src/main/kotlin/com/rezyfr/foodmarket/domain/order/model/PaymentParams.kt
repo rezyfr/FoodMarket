@@ -15,6 +15,7 @@ data class PaymentParams(
     val userId: String,
     val quantity: Int,
     val total: Int,
+    val foodPrice: Int,
     val status: String
 ) : Serializable {
     companion object {
@@ -23,6 +24,7 @@ data class PaymentParams(
             userId = "",
             quantity = 0,
             total = 0,
+            foodPrice = 0,
             status = ""
         )
     }

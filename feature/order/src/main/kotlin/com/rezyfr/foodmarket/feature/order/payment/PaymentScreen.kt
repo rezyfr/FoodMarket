@@ -13,15 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.rezyfr.foodmarket.core.ui.component.FMHeader
 import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithBackButton
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
+import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
+import com.rezyfr.foodmarket.core.ui.util.formatCurrency
+import com.rezyfr.foodmarket.domain.order.model.PaymentDetails
 import com.rezyfr.foodmarket.domain.order.model.PaymentParams
 import com.rezyfr.foodmarket.feature.order.R
 import com.rezyfr.foodmarket.feature.order.payment.component.FoodOrderItem
+import com.rezyfr.foodmarket.feature.order.payment.component.LabelValueItem
 
 @Composable
 fun PaymentScreen(
@@ -83,10 +88,57 @@ fun PaymentBody(modifier: Modifier = Modifier, state: PaymentViewState) {
     Column(modifier) {
         Text(
             text = stringResource(id = R.string.lbl_ordered_item),
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.body2
         )
         VSpacer(12)
         FoodOrderItem(params = state.params, name = state.food.first, image = state.food.second)
+        VSpacer(16)
+        Text(
+            text = stringResource(id = R.string.lbl_detail_transaction),
+            style = MaterialTheme.typography.body2
+        )
+        VSpacer(16)
+        LabelValueItem(state.food.first, state.params.total.formatCurrency())
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_driver),
+            state.details.driverFee.formatCurrency()
+        )
+        VSpacer(6)
+        LabelValueItem(stringResource(id = R.string.lbl_tax), state.details.tax.formatCurrency())
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_total_price),
+            state.details.totalAmount.formatCurrency(),
+            valueStyle = MaterialTheme.typography.body2.copy(
+                color = MaterialTheme.colors.secondaryVariant,
+                fontWeight = FontWeight.Medium
+            )
+        )
     }
 }
 
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewPaymentScreen() {
+    FoodMarketTheme {
+        PaymentContent(
+            state = PaymentViewState(
+                params = PaymentParams(
+                    total = 150000,
+                    foodId = "1",
+                    quantity = 5,
+                    status = "",
+                    foodPrice = 30000,
+                    userId = ""
+                ),
+                food = Pair("Cherry Healthy", ""),
+                details = PaymentDetails(
+                    tax = 15000,
+                    totalAmount = 215000,
+                    driverFee = 50000
+                )
+            )
+        )
+    }
+}

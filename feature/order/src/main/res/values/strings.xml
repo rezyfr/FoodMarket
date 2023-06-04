@@ -6,4 +6,7 @@
     <string name="lbl_payment">Payment</string>
     <string name="lbl_payment_subtitle">You deserve better meal</string>
     <string name="lbl_ordered_item">Item Ordered</string>
+    <string name="lbl_detail_transaction">Details Transaction</string>
+    <string name="lbl_driver">Driver\n</string>
+    <string name="lbl_tax">Tax 10%</string>
 </resources>

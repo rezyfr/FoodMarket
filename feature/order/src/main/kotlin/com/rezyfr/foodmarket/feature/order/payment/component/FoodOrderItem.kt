@@ -57,7 +57,7 @@ internal fun FoodOrderItem(
                 style = MaterialTheme.typography.body1,
             )
             Text(
-                text = params.total.toLong().formatCurrency(),
+                text = params.foodPrice.formatCurrency(),
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.secondary
             )

@@ -16,3 +16,29 @@ fun Long.formatCurrency(): String {
         ""
     }
 }
+
+fun Int.formatCurrency(): String {
+    return try {
+        val locale = Locale("id", "ID")
+        val decimal = DecimalFormatSymbols(locale)
+
+        val formatter = DecimalFormat("#,###", decimal)
+        "IDR ${formatter.format(this)}"
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
+}
+
+fun Double.formatCurrency(): String {
+    return try {
+        val locale = Locale("id", "ID")
+        val decimal = DecimalFormatSymbols(locale)
+
+        val formatter = DecimalFormat("#,###", decimal)
+        "IDR ${formatter.format(this)}"
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
+}

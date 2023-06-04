@@ -87,6 +87,7 @@ class FoodDetailViewModel @Inject constructor(
                 userId = "",
                 quantity = order.quantity,
                 total = order.total.toInt(),
+                foodPrice = food.data.price.toInt(),
                 status = "",
             )
 

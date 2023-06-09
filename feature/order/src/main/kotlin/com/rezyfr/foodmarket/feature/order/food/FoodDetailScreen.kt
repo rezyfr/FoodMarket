@@ -48,6 +48,7 @@ import com.rezyfr.foodmarket.core.ui.util.formatCurrency
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
 import com.rezyfr.foodmarket.domain.order.model.PaymentParams
 import com.rezyfr.foodmarket.feature.order.R
+import com.rezyfr.foodmarket.feature.order.model.OrderParams
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

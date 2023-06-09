@@ -1,31 +1,32 @@
 package com.rezyfr.foodmarket.feature.auth.signup
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rezyfr.foodmarket.core.ui.base.BaseFlowViewModel
-import com.rezyfr.foodmarket.core.domain.model.ViewError
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
-import com.rezyfr.foodmarket.core.domain.utils.Either
 import com.rezyfr.foodmarket.domain.auth.model.SignUpParams
-import com.rezyfr.foodmarket.domain.auth.model.SignUpResult
 import com.rezyfr.foodmarket.domain.auth.usecase.SignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
-) : BaseFlowViewModel<SignUpViewState, SignUpViewEvent>() {
+) : ViewModel() {
     private var signUpParams = MutableStateFlow(initialUi.params)
     private var signUpResult = MutableStateFlow(initialUi.result)
-    override val initialUi: SignUpViewState
+    private val initialUi: SignUpViewState
         get() = SignUpViewState()
-    override val uiFlow: Flow<SignUpViewState>
+    private val uiFlow: Flow<SignUpViewState>
         get() = combine(signUpParams, signUpResult) { params, result ->
             SignUpViewState(
                 params = params,
@@ -33,7 +34,14 @@ class SignUpViewModel @Inject constructor(
                 result = result
             )
         }
-
+    val uiState: StateFlow<SignUpViewState> by lazy {
+        uiFlow.flowOn(Dispatchers.Default)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000L),
+                initialValue = initialUi,
+            )
+    }
     private fun onEmailChanged(email: String) {
         signUpParams.value = signUpParams.value.copy(email = email)
     }
@@ -67,7 +75,7 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    override suspend fun handleEvent(event: SignUpViewEvent) {
+    fun onEvent(event: SignUpViewEvent) {
         when (event) {
             is SignUpViewEvent.OnEmailChanged -> onEmailChanged(event.email)
             is SignUpViewEvent.OnPasswordChanged -> onPasswordChanged(event.password)
@@ -75,17 +83,4 @@ class SignUpViewModel @Inject constructor(
             SignUpViewEvent.OnSignUpClicked -> onSignUpClicked()
         }
     }
-}
-
-data class SignUpViewState(
-    val params: SignUpParams = SignUpParams("", "", "", "", "", "", ""),
-    val isValidate: Boolean = false,
-    val result: ViewResult<SignUpResult> = ViewResult.Uninitialized,
-)
-
-sealed interface SignUpViewEvent {
-    data class OnEmailChanged(val email: String) : SignUpViewEvent
-    data class OnPasswordChanged(val password: String) : SignUpViewEvent
-    data class OnNameChanged(val name: String) : SignUpViewEvent
-    object OnSignUpClicked : SignUpViewEvent
 }

@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithBackButton
+import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.core.ui.util.formatCurrency
@@ -78,21 +81,101 @@ fun PaymentContent(
                 .background(color = MaterialTheme.colors.secondary.copy(alpha = 0.2f))
         )
         PaymentBody(
-            Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
-            state = state
+            Modifier.padding(vertical = 16.dp),
+            state = state,
+            openOngoingOrder = openOngoingOrder
         )
     }
 }
 @Composable
-fun PaymentBody(modifier: Modifier = Modifier, state: PaymentViewState) {
-    Column(modifier) {
+fun PaymentBody(
+    modifier: Modifier = Modifier,
+    state: PaymentViewState,
+    openOngoingOrder: () -> Unit = {}
+) {
+    Column(
+        Modifier.verticalScroll(rememberScrollState())) {
+        ItemOrdered(modifier = Modifier.padding(horizontal = 16.dp), state = state)
+        VSpacer(16)
+        DetailTransaction(modifier = Modifier.padding(horizontal = 16.dp), state = state)
+        VSpacer(16)
+        Box(
+            modifier = Modifier
+                .height(24.dp)
+                .fillMaxWidth()
+                .background(color = MaterialTheme.colors.secondary.copy(alpha = 0.2f))
+        )
+        VSpacer(16)
+        DeliverData(modifier = Modifier.padding(horizontal = 16.dp), state = state)
+        CheckoutButton(
+            modifier = Modifier
+                .fillMaxWidth(),
+            state = state,
+            onClick = openOngoingOrder
+        )
+    }
+}
+@Composable
+fun CheckoutButton(
+    modifier: Modifier = Modifier,
+    state: PaymentViewState,
+    onClick: () -> Unit = {}
+) {
+    Box(Modifier.padding(24.dp)) {
+        PrimaryButton(
+            modifier = modifier,
+            text = "Checkout Now"
+        ) {
+            onClick()
+        }
+    }
+}
+@Composable
+fun DeliverData(
+    modifier: Modifier = Modifier, state: PaymentViewState
+) {
+    Column(modifier = modifier) {
         Text(
-            text = stringResource(id = R.string.lbl_ordered_item),
+            text = stringResource(id = R.string.lbl_deliver_to),
             style = MaterialTheme.typography.body2
         )
-        VSpacer(12)
-        FoodOrderItem(params = state.params, name = state.food.first, image = state.food.second)
         VSpacer(16)
+        LabelValueItem(stringResource(id = R.string.lbl_name), state.params.total.formatCurrency())
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_phone_no),
+            state.details.driverFee.formatCurrency()
+        )
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_address),
+            state.details.tax.formatCurrency()
+        )
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_house_no),
+            state.details.totalAmount.formatCurrency(),
+            valueStyle = MaterialTheme.typography.body2.copy(
+                color = MaterialTheme.colors.secondaryVariant,
+                fontWeight = FontWeight.Medium
+            )
+        )
+        VSpacer(6)
+        LabelValueItem(
+            stringResource(id = R.string.lbl_city),
+            state.details.totalAmount.formatCurrency(),
+            valueStyle = MaterialTheme.typography.body2.copy(
+                color = MaterialTheme.colors.secondaryVariant,
+                fontWeight = FontWeight.Medium
+            )
+        )
+    }
+}
+@Composable
+fun DetailTransaction(
+    modifier: Modifier = Modifier, state: PaymentViewState
+) {
+    Column(modifier = modifier) {
         Text(
             text = stringResource(id = R.string.lbl_detail_transaction),
             style = MaterialTheme.typography.body2
@@ -104,7 +187,6 @@ fun PaymentBody(modifier: Modifier = Modifier, state: PaymentViewState) {
             stringResource(id = R.string.lbl_driver),
             state.details.driverFee.formatCurrency()
         )
-        VSpacer(6)
         LabelValueItem(stringResource(id = R.string.lbl_tax), state.details.tax.formatCurrency())
         VSpacer(6)
         LabelValueItem(
@@ -117,7 +199,20 @@ fun PaymentBody(modifier: Modifier = Modifier, state: PaymentViewState) {
         )
     }
 }
-
+@Composable
+fun ItemOrdered(
+    modifier: Modifier = Modifier,
+    state: PaymentViewState
+) {
+    Column(modifier = modifier.padding(top = 16.dp)) {
+        Text(
+            text = stringResource(id = R.string.lbl_ordered_item),
+            style = MaterialTheme.typography.body2
+        )
+        VSpacer(12)
+        FoodOrderItem(params = state.params, name = state.food.first, image = state.food.second)
+    }
+}
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewPaymentScreen() {

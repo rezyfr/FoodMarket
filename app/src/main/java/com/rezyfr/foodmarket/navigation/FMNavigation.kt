@@ -9,6 +9,7 @@ import androidx.compose.animation.slideIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -87,7 +88,14 @@ internal fun FMNavigation(
                     navController.navigateUp()
                 },
                 openOngoingOrder = {
-                                   // Open order list
+                    navController.navigate(Screen.Order.route) {
+                        launchSingleTop = true
+                        restoreState = true
+
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                    }
                 },
                 paymentParams = params
             )

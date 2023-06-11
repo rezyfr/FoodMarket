@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/auth" />
             <option value="$PROJECT_DIR$/data/food" />
+            <option value="$PROJECT_DIR$/data/order" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/auth" />
             <option value="$PROJECT_DIR$/domain/food" />

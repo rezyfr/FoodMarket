@@ -9,4 +9,10 @@
     <string name="lbl_detail_transaction">Details Transaction</string>
     <string name="lbl_driver">Driver\n</string>
     <string name="lbl_tax">Tax 10%</string>
+    <string name="lbl_deliver_to">Deliver to:</string>
+    <string name="lbl_name">Name</string>
+    <string name="lbl_phone_no">Phone No.</string>
+    <string name="lbl_address">Address</string>
+    <string name="lbl_house_no">House No.</string>
+    <string name="lbl_city">City</string>
 </resources>

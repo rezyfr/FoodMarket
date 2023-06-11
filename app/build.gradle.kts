@@ -57,6 +57,7 @@ dependencies {
 
     implementation(project(":feature:order"))
     implementation(project(":domain:order"))
+    implementation(project(":data:order"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)

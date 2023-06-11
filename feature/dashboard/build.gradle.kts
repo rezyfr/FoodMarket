@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation(project(":domain:food"))
     implementation(project(":domain:auth"))
+    implementation(project(":domain:order"))
 
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)

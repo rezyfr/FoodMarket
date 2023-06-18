@@ -47,7 +47,8 @@ fun FoodExplore(
         state = state,
         openFoodDetail = openFoodDetail,
         pagerState = pagerState,
-        coroutineScope = coroutineScope
+        coroutineScope = coroutineScope,
+        selectedTab = pagerState.currentPage
     )
 }
 @OptIn(ExperimentalFoundationApi::class)

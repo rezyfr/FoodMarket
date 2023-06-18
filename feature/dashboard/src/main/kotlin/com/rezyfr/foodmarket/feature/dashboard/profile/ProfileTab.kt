@@ -1,18 +1,17 @@
-package com.rezyfr.foodmarket.feature.dashboard.order
+package com.rezyfr.foodmarket.feature.dashboard.profile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -25,18 +24,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OrderList(
+fun ProfileTab(
     modifier: Modifier = Modifier,
-    state: OrderViewState,
-    openPayment: (orderId: String) -> Unit = { }
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
-    OrderListContent(
+    ProfileTabContent(
         modifier = modifier,
-        state = state,
-        openPayment = openPayment,
         pagerState = pagerState,
         coroutineScope = coroutineScope,
         selectedTab = pagerState.currentPage
@@ -44,10 +39,8 @@ fun OrderList(
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OrderListContent(
+fun ProfileTabContent(
     modifier: Modifier = Modifier,
-    state: OrderViewState = OrderViewState(),
-    openPayment: (orderId: String) -> Unit = {},
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
     selectedTab: Int = 0
@@ -66,7 +59,7 @@ fun OrderListContent(
                 selectedTabIndex = selectedTab,
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
-                listOf("In Progress", "Past Orders").forEachIndexed { index, title ->
+                listOf("Account", "FoodMarket").forEachIndexed { index, title ->
                     FMTab(
                         selected = selectedTab == index,
                         onClick = {
@@ -77,26 +70,21 @@ fun OrderListContent(
                 }
             }
         }
-        HorizontalPager(pageCount = 3, state = pagerState) { page ->
+        HorizontalPager(pageCount = 2, state = pagerState) { page ->
             when (page) {
-                0 -> FoodOrderList(type = "ongoing", state = state, openPayment = openPayment)
-                1 -> FoodOrderList(type = "past", state = state, openPayment = openPayment)
+                0 -> AccountTab()
+                1 -> FoodMarketTab()
             }
         }
     }
 }
+
 @Composable
-fun FoodOrderList(
-    modifier: Modifier = Modifier,
-    openPayment: (orderId: String) -> Unit = { },
-    type: String,
-    state: OrderViewState
-) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = modifier) {
-        if (type == "ongoing") {
-            foodOrderItem(foodOrderResult = state.onGoingOrders, openPayment = openPayment)
-        } else {
-            foodOrderItem(foodOrderResult = state.pastOrders, openPayment = openPayment)
-        }
-    }
+private fun AccountTab() {
+    Text(text = "Account Tab")
+}
+
+@Composable
+private fun FoodMarketTab() {
+    Text(text = "Food Market Tab")
 }

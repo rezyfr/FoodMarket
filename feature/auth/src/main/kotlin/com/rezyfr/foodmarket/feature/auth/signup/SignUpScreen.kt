@@ -35,6 +35,7 @@ import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
 import com.rezyfr.foodmarket.core.ui.component.rememberSnackBarState
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
+import com.rezyfr.foodmarket.core.ui.component.CircleDashedBorder
 import com.rezyfr.foodmarket.feature.auth.R
 import com.rezyfr.foodmarket.feature.auth.component.EmailTextField
 import com.rezyfr.foodmarket.feature.auth.component.PasswordTextField
@@ -185,21 +186,6 @@ fun AddPhotoContainer(
             color = MaterialTheme.colors.secondary,
             radius = 180f,
             modifier = Modifier.align(Alignment.Center)
-        )
-    }
-}
-@Composable
-fun CircleDashedBorder(
-    modifier: Modifier = Modifier,
-    color: Color,
-    radius: Float,
-) {
-    Canvas(modifier = modifier) {
-        drawCircle(
-            color = color, radius = radius, style = Stroke(
-                width = 2f,
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
-            )
         )
     }
 }

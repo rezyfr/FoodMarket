@@ -25,6 +25,7 @@ include(":feature:dashboard")
 include(":feature:order")
 include(":domain:order")
 include(":data:order")
+include(":feature:profile")
 
 include(":core:network")
 include(":core:ui")

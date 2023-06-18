@@ -28,7 +28,7 @@ fun OrderScreen(
     )
 }
 @Composable
-fun Order(
+private fun Order(
     viewModel: OrderViewModel,
     openPayment: (foodId: String) -> Unit = { }
 ) {
@@ -40,7 +40,7 @@ fun Order(
     )
 }
 @Composable
-fun OrderContent(
+private fun OrderContent(
     state: OrderViewState,
     openPayment: (orderId: String) -> Unit = { }
 ) {
@@ -62,7 +62,7 @@ fun OrderContent(
 }
 
 @Composable
-fun Header(
+private fun Header(
     modifier: Modifier = Modifier,
     state: OrderViewState
 ) {
@@ -73,7 +73,7 @@ fun Header(
 }
 @Composable
 @Preview
-fun OrderScreenPreview() {
+private fun OrderScreenPreview() {
     FoodMarketTheme {
         OrderScreen()
     }

@@ -60,13 +60,18 @@ fun DashboardScreen(
                 DashboardBottomNavigation(
                     selectedNavigation = currentSelectedItem.first,
                     onNavigationSelected = { selected ->
-                        appState.navController.navigate(selected.route) {
-                            launchSingleTop = true
-                            restoreState = true
+                        try {
+                            appState.navController.navigate(selected.route) {
+                                launchSingleTop = true
+                                restoreState = true
 
-                            popUpTo(appState.navController.graph.findStartDestination().id) {
-                                saveState = true
+                                popUpTo(appState.navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
                             }
+                        } catch (e: IllegalStateException) {
+                            e.printStackTrace()
+                            appState.navController.navigate(selected.route)
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),

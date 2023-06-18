@@ -88,7 +88,14 @@ internal fun FMNavigation(
                     navController.navigateUp()
                 },
                 openOngoingOrder = {
-                    navController.navigate(Screen.Order.route)
+                    navController.navigate(Screen.Order.route)  {
+                        launchSingleTop = true
+                        restoreState = true
+
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                    }
                 },
                 paymentParams = params
             )

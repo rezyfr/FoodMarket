@@ -1,7 +1,13 @@
 package com.rezyfr.foodmarket.feature.dashboard.home
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rezyfr.foodmarket.core.domain.model.PagingState
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
 import com.rezyfr.foodmarket.domain.auth.model.UserDomainModel
 import com.rezyfr.foodmarket.domain.auth.usecase.GetUserProfileUseCase
@@ -24,12 +30,12 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val getAllFoodUseCase: GetAllFoodUseCase
-): ViewModel() {
-
+) : ViewModel() {
     private var profileResult = MutableStateFlow(initialUi.profile)
     private var foodResult = MutableStateFlow(initialUi.foods)
-
-
+    private var page by mutableStateOf(1)
+    var pagingState by mutableStateOf(PagingState.IDLE)
+    var canPaginate by mutableStateOf(false)
     private val initialUi: HomeViewState
         get() = HomeViewState()
     private val uiFlow: Flow<HomeViewState>
@@ -47,22 +53,38 @@ class HomeViewModel @Inject constructor(
                 initialValue = initialUi,
             )
     }
+
     init {
         getProfile()
         getFoodExplore()
     }
 
-    private fun getFoodExplore() {
+    fun getFoodExplore() {
         viewModelScope.launch {
-            getAllFoodUseCase.invoke(Unit).collectLatest {
-                it.fold(
-                    { error ->
-                        foodResult.value = ViewResult.Error(error)
-                    },
-                    { result ->
-                        foodResult.value = ViewResult.Success(result)
-                    }
-                )
+            if (page == 1 || (page != 1 && canPaginate) && pagingState == PagingState.IDLE) {
+                pagingState = if (page == 1) PagingState.LOADING else PagingState.PAGINATING
+
+                getAllFoodUseCase.invoke(page).collectLatest {
+                    it.fold(
+                        ifLeft = {
+                            //Handle error
+                        }, ifRight = { result ->
+                            if (result.data.isNotEmpty()) {
+                                canPaginate = result.currentPage < result.lastPage
+
+                                if (page == 1) foodResult.value.clear()
+
+                                foodResult.value.addAll(result.data)
+                                pagingState = PagingState.IDLE
+
+                                if (canPaginate) page++
+                            } else {
+                                pagingState =
+                                    if (page == 1) PagingState.ERROR else PagingState.PAGINATION_EXHAUST
+                            }
+                        }
+                    )
+                }
             }
         }
     }
@@ -85,5 +107,5 @@ class HomeViewModel @Inject constructor(
 
 data class HomeViewState(
     val profile: ViewResult<UserDomainModel> = ViewResult.Uninitialized,
-    val foods: ViewResult<List<FoodModel>> = ViewResult.Uninitialized
+    val foods: SnapshotStateList<FoodModel> = mutableStateListOf()
 )

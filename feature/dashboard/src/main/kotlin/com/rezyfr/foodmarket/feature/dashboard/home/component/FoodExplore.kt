@@ -103,18 +103,18 @@ fun FoodExploreList(
 ) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = modifier) {
         when (state.foods) {
-            is ViewResult.Success -> {
-                itemsIndexed(state.foods.data) { index, food ->
-                    if (index == 0) VSpacer(16)
-                    FoodExploreItem(
-                        food = food,
-                        modifier = Modifier.clickable { openFoodDetail(food.id) }
-                    )
-                    if (index == state.foods.data.lastIndex) VSpacer(16)
-                }
-            }
-
-            else -> Unit
+//            is ViewResult.Success -> {
+//                itemsIndexed(state.foods.data) { index, food ->
+//                    if (index == 0) VSpacer(16)
+//                    FoodExploreItem(
+//                        food = food,
+//                        modifier = Modifier.clickable { openFoodDetail(food.id) }
+//                    )
+//                    if (index == state.foods.data.lastIndex) VSpacer(16)
+//                }
+//            }
+//
+//            else -> Unit
         }
     }
 }
@@ -124,7 +124,7 @@ fun FoodExplorePreview() {
     FoodMarketTheme {
         FoodExplore(
             state = HomeViewState(
-                foods = ViewResult.Success(FoodModel.getDummy())
+//                foods = ViewResult.Success(FoodModel.getDummy())
             )
         )
     }

@@ -18,7 +18,7 @@ object DataFoodModule {
     fun provideFoodRepository(
         foodService: FoodService
     ): FoodRepository {
-        return FoodRepositoryImpl()
+        return FoodRepositoryImpl(foodService)
     }
     @Singleton
     @Provides

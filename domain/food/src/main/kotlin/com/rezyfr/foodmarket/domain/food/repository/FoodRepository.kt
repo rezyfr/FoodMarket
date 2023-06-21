@@ -1,6 +1,8 @@
 package com.rezyfr.foodmarket.domain.food.repository
 
+import com.rezyfr.foodmarket.core.domain.model.PagingResult
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
+import kotlinx.coroutines.flow.Flow
 
 interface FoodRepository {
     suspend fun getFoods(
@@ -13,7 +15,8 @@ interface FoodRepository {
             rateFrom: Int,
             rateTo: Int,
         **/
-    ): List<FoodModel>
+        page: Int
+    ):Flow<PagingResult<FoodModel>>
     suspend fun getFoodById(
         id: String
     ) : FoodModel

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -56,7 +57,7 @@ fun Home(
     val lazyColumnListState = rememberLazyListState()
     val shouldPaginate = remember {
         derivedStateOf {
-            viewModel.canPaginate && (lazyColumnListState.layoutInfo.visibleItemsInfo.last().index) >= (lazyColumnListState.layoutInfo.totalItemsCount - 6)
+            viewModel.canPaginate && (lazyColumnListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) >= (lazyColumnListState.layoutInfo.totalItemsCount - 6)
         }
     }
 
@@ -68,15 +69,15 @@ fun Home(
 
     HomeContent(
         state = viewState,
-        pagingState = viewModel.pagingState,
-        openFoodDetail = openFoodDetail
+        openFoodDetail = openFoodDetail,
+        listState = lazyColumnListState
     )
 }
 @Composable
 fun HomeContent(
     state: HomeViewState,
-    pagingState: PagingState = IDLE,
-    openFoodDetail: (foodId: String) -> Unit = { }
+    openFoodDetail: (foodId: String) -> Unit = { },
+    listState: LazyListState = rememberLazyListState()
 ) {
     Column(
         Modifier
@@ -85,7 +86,7 @@ fun HomeContent(
             .fillMaxHeight()
     ) {
         Header(Modifier, state)
-        FoodCarousel(Modifier, openFoodDetail, state, pagingState)
+        FoodCarousel(Modifier, openFoodDetail, state, listState)
         FoodExplore(Modifier, openFoodDetail, state)
     }
 }
@@ -94,13 +95,14 @@ fun FoodCarousel(
     modifier: Modifier = Modifier,
     openFoodDetail: (foodId: String) -> Unit = { },
     state: HomeViewState,
-    pagingState: PagingState
+    listState: LazyListState
 ) {
     LazyRow(
         modifier
             .background(MaterialTheme.colors.secondary.copy(alpha = 0.1f))
             .padding(vertical = 24.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        state = listState
     ) {
         itemsIndexed(state.foods) { index, food ->
             if (index == 0) HSpacer(16)

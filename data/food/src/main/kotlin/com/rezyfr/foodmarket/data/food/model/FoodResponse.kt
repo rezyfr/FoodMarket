@@ -13,9 +13,9 @@ data class FoodResponse(
     @SerializedName("description")
     val description: String?,
     @SerializedName("ingredients")
-    val ingredients: List<String>?,
+    val ingredients: String?,
     @SerializedName("price")
-    val price: Long?,
+    val price: String?,
     @SerializedName("rate")
     val rate: Double?,
     @SerializedName("types")
@@ -29,8 +29,8 @@ data class FoodResponse(
                     picture = it.picturePath.orEmpty(),
                     name = it.name.orEmpty(),
                     desc = it.description.orEmpty(),
-                    ingredients = it.ingredients.orEmpty(),
-                    price = it.price ?: 0,
+                    ingredients = it.ingredients?.split("\\r\\n").orEmpty(),
+                    price = it.price?.toLongOrNull() ?: 0L,
                     rate = it.rate ?: 0.0,
                     types = it.types.orEmpty(),
                 )

@@ -18,6 +18,6 @@ interface FoodRepository {
         page: Int
     ):Flow<PagingResult<FoodModel>>
     suspend fun getFoodById(
-        id: String
+        id: Int
     ) : FoodModel
 }

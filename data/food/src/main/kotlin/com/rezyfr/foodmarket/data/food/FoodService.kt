@@ -22,4 +22,9 @@ interface FoodService {
          **/
         @Query("page") page: Int
     ): NetworkResponse<BaseResponse<PagingResponse<FoodResponse>>, ErrorResponse>
+
+    @GET("food")
+    suspend fun getFoodById(
+        @Query("id") id: Int
+    ): NetworkResponse<BaseResponse<FoodResponse>, ErrorResponse>
 }

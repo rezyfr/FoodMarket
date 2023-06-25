@@ -75,7 +75,7 @@ class FoodDetailViewModel @Inject constructor(
 
     private fun getFoodById() {
         viewModelScope.launch {
-            val foodId: String = savedStateHandle["foodId"]!!
+            val foodId: Int = savedStateHandle["foodId"]!!
             getFoodByIdUseCase.invoke(foodId).collectLatest {
                 it.fold(
                     ifRight = { food.value = ViewResult.Success(it) },

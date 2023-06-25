@@ -20,7 +20,7 @@ import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 @Composable
 fun OrderScreen(
     modifier: Modifier = Modifier,
-    openPayment: (foodId: String) -> Unit = { }
+    openPayment: (orderId: Int) -> Unit = { }
 ) {
     Order(
         viewModel = hiltViewModel(),
@@ -30,7 +30,7 @@ fun OrderScreen(
 @Composable
 private fun Order(
     viewModel: OrderViewModel,
-    openPayment: (foodId: String) -> Unit = { }
+    openPayment: (orderId: Int) -> Unit = { }
 ) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -42,7 +42,7 @@ private fun Order(
 @Composable
 private fun OrderContent(
     state: OrderViewState,
-    openPayment: (orderId: String) -> Unit = { }
+    openPayment: (orderId: Int) -> Unit = { }
 ) {
     Column(
         Modifier

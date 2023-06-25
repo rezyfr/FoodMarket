@@ -12,7 +12,7 @@ sealed interface FoodDetailEvent {
 
 data class FoodDetailViewState(
     val food: ViewResult<FoodModel> = ViewResult.Uninitialized,
-    val orderParams: OrderParams = OrderParams("", 0, 0.0)
+    val orderParams: OrderParams = OrderParams(0, 0, 0.0)
 )
 
 sealed class FoodDetailViewEffect {

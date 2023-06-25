@@ -11,7 +11,7 @@ import java.io.Serializable
  **/
 
 data class PaymentParams(
-    val foodId: String,
+    val foodId: Int,
     val userId: String,
     val quantity: Int,
     val total: Int,
@@ -20,7 +20,7 @@ data class PaymentParams(
 ) : Serializable {
     companion object {
         fun empty() = PaymentParams(
-            foodId = "",
+            foodId = 0,
             userId = "",
             quantity = 0,
             total = 0,

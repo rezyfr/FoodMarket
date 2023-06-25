@@ -1,7 +1,7 @@
 package com.rezyfr.foodmarket.domain.food.model
 
 data class FoodModel(
-    val id: String,
+    val id: Int,
     val name: String,
     val picture: String,
     val desc: String,
@@ -13,7 +13,7 @@ data class FoodModel(
     companion object {
         fun getDummy() = listOf<FoodModel>(
             FoodModel(
-                id = "1",
+                id = 1,
                 name = "Cherry Healthy",
                 picture = "https://static.wikia.nocookie.net/gensin-impact/images/8/8f/Item_Satisfying_Salad.png/revision/latest?cb=20210417153219",
                 desc = "Makanan khas Bandung yang cukup sering dipesan oleh anak muda dengan pola makan yang cukup tinggi dengan mengutamakan diet yang sehat dan teratur.",
@@ -23,7 +23,7 @@ data class FoodModel(
                 types = "",
             ),
             FoodModel(
-                id = "2",
+                id = 2,
                 name = "Burger Tamayo",
                 picture = "https://i.pinimg.com/474x/63/65/a7/6365a79072a3f9c783fd739228ee1d18.jpg",
                 desc = "Burger tamayo adalah burger yang dibuat dari daging sapi pilihan dengan keju yang meleleh",
@@ -33,7 +33,7 @@ data class FoodModel(
                 types = "",
             ),
             FoodModel(
-                id = "3",
+                id = 3,
                 name = "Sop Bumil",
                 picture = "https://food.fnr.sndimg.com/content/dam/images/food/video/0/02/020/0208/0208606.jpg.rend.hgtvcom.406.305.suffix/1660150010379.jpeg",
                 desc = "Sop bumil adalah sup yang dibuat dari bahan bahan alami yang sehat tanpa bahan pengawet",

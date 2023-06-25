@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FoodExplore(
     modifier: Modifier = Modifier,
-    openFoodDetail: (foodId: String) -> Unit = { },
+    openFoodDetail: (foodId: Int) -> Unit = { },
     state: HomeViewState
 ) {
     val pagerState = rememberPagerState()
@@ -56,7 +56,7 @@ fun FoodExplore(
 fun FoodExploreContent(
     modifier: Modifier = Modifier,
     state: HomeViewState = HomeViewState(),
-    openFoodDetail: (foodId: String) -> Unit = { },
+    openFoodDetail: (foodId: Int) -> Unit = { },
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
     selectedTab: Int = 0
@@ -98,7 +98,7 @@ fun FoodExploreContent(
 @Composable
 fun FoodExploreList(
     modifier: Modifier = Modifier,
-    openFoodDetail: (foodId: String) -> Unit = { },
+    openFoodDetail: (foodId: Int) -> Unit = { },
     state: HomeViewState
 ) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = modifier) {

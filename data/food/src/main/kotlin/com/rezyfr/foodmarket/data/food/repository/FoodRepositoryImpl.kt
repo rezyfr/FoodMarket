@@ -17,12 +17,12 @@ class FoodRepositoryImpl(
     private val foodService: FoodService
 ) : FoodRepository {
     override suspend fun getFoods(page: Int): Flow<PagingResult<FoodModel>> = flow {
-        val response = foodService.getFoods(page).handleResponse() ?: throw Exception("Data is empty")
+        val response = foodService.getFoods(page).handleResponse()
         val data = response.mapToPagingResult { it.mapToFoodModel() }
         emit(data)
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getFoodById(id: String): FoodModel {
-        return FoodModel.getDummy().first { it.id == id }
+    override suspend fun getFoodById(id: Int): FoodModel {
+        return foodService.getFoodById(id).handleResponse().mapToFoodModel()
     }
 }

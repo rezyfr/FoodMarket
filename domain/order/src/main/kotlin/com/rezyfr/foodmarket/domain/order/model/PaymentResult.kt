@@ -9,7 +9,7 @@ package com.rezyfr.foodmarket.domain.order.model
  * 'payment_url'
  */
 data class PaymentResult(
-    val foodId: String,
+    val foodId: Int,
     val userId: String,
     val quantity: Int,
     val total: Int,

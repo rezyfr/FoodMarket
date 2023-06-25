@@ -62,7 +62,7 @@ internal fun FMNavigation(
         composable(
             "${Screen.FoodDetail.route}/{foodId}",
             arguments = listOf(
-                navArgument("foodId") { type = NavType.StringType },
+                navArgument("foodId") { type = NavType.IntType },
             )
         ) {
             FoodDetailScreen(

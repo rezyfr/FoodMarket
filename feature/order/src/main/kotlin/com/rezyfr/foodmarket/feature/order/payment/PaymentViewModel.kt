@@ -58,7 +58,7 @@ class PaymentViewModel @Inject constructor(
             )
     }
     private fun getPaymentDetails(params: PaymentParams) {
-        if(params.foodId.isNotEmpty()) {
+        if(params.foodId != 0) {
             viewModelScope.launch {
                 getPaymentDetailsUseCase.invoke(params).collect {
                     it.fold(

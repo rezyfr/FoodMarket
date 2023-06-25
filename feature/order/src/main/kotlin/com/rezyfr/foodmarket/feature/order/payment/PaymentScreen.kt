@@ -221,7 +221,7 @@ fun PreviewPaymentScreen() {
             state = PaymentViewState(
                 params = PaymentParams(
                     total = 150000,
-                    foodId = "1",
+                    foodId = 1,
                     quantity = 5,
                     status = "",
                     foodPrice = 30000,

@@ -41,7 +41,7 @@ import com.rezyfr.foodmarket.feature.dashboard.home.component.FoodExplore
 
 @Composable
 fun HomeScreen(
-    openFoodDetail: (foodId: String) -> Unit = { }
+    openFoodDetail: (foodId: Int) -> Unit = { }
 ) {
     Home(
         viewModel = hiltViewModel(),
@@ -51,7 +51,7 @@ fun HomeScreen(
 @Composable
 fun Home(
     viewModel: HomeViewModel,
-    openFoodDetail: (foodId: String) -> Unit = { }
+    openFoodDetail: (foodId: Int) -> Unit = { }
 ) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
     val lazyColumnListState = rememberLazyListState()
@@ -76,7 +76,7 @@ fun Home(
 @Composable
 fun HomeContent(
     state: HomeViewState,
-    openFoodDetail: (foodId: String) -> Unit = { },
+    openFoodDetail: (foodId: Int) -> Unit = { },
     listState: LazyListState = rememberLazyListState()
 ) {
     Column(
@@ -93,7 +93,7 @@ fun HomeContent(
 @Composable
 fun FoodCarousel(
     modifier: Modifier = Modifier,
-    openFoodDetail: (foodId: String) -> Unit = { },
+    openFoodDetail: (foodId: Int) -> Unit = { },
     state: HomeViewState,
     listState: LazyListState
 ) {

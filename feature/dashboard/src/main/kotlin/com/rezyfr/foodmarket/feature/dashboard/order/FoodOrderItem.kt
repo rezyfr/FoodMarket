@@ -29,7 +29,7 @@ import com.rezyfr.foodmarket.core.ui.util.formatCurrency
 import com.rezyfr.foodmarket.domain.order.model.FoodOrderModel
 
 fun LazyListScope.foodOrderItem(
-    openPayment: (orderId: String) -> Unit = { },
+    openPayment: (orderId: Int) -> Unit = { },
     foodOrderResult: ViewResult<List<FoodOrderModel>> = ViewResult.Uninitialized,
 ) {
     when (foodOrderResult) {
@@ -48,7 +48,7 @@ fun LazyListScope.foodOrderItem(
 fun FoodOrderItemContent(
     modifier: Modifier = Modifier,
     order: FoodOrderModel,
-    openPayment: (orderId: String) -> Unit = { },
+    openPayment: (orderId: Int) -> Unit = { },
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -57,7 +57,7 @@ fun FoodOrderItemContent(
             .padding(
                 horizontal = 24.dp
             )
-            .clickable { openPayment(order.id) }
+            .clickable { openPayment(order.id.toInt()) }
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = order.imageUrl),

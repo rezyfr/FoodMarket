@@ -44,13 +44,12 @@ data class CustomTypography(
         val regular: TextStyle,
     ) {
         val demi: TextStyle get() = regular.copy(fontWeight = FontWeight.SemiBold)
-        val book: TextStyle get() = regular.copy(fontWeight = FontWeight.Normal)
+
     }
 
     data class Small(
         val regular: TextStyle,
     ) {
-        val demi: TextStyle get() = regular.copy(fontWeight = FontWeight.SemiBold)
         val bold: TextStyle get() = regular.copy(fontWeight = FontWeight.Bold)
     }
 

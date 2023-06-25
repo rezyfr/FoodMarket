@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 fun OrderList(
     modifier: Modifier = Modifier,
     state: OrderViewState,
-    openPayment: (orderId: String) -> Unit = { }
+    openPayment: (orderId: Int) -> Unit = { }
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -47,7 +47,7 @@ fun OrderList(
 fun OrderListContent(
     modifier: Modifier = Modifier,
     state: OrderViewState = OrderViewState(),
-    openPayment: (orderId: String) -> Unit = {},
+    openPayment: (orderId: Int) -> Unit = {},
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
     selectedTab: Int = 0
@@ -88,7 +88,7 @@ fun OrderListContent(
 @Composable
 fun FoodOrderList(
     modifier: Modifier = Modifier,
-    openPayment: (orderId: String) -> Unit = { },
+    openPayment: (orderId: Int) -> Unit = { },
     type: String,
     state: OrderViewState
 ) {

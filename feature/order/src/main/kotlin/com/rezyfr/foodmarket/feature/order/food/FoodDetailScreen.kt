@@ -23,6 +23,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,6 +44,7 @@ import com.rezyfr.foodmarket.core.ui.component.HSpacer
 import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.RatingBar
 import com.rezyfr.foodmarket.core.ui.component.VSpacer
+import com.rezyfr.foodmarket.core.ui.theme.FMTheme
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.core.ui.util.formatCurrency
 import com.rezyfr.foodmarket.domain.food.model.FoodModel
@@ -145,7 +147,8 @@ fun FoodDetailBody(
             Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             PriceSection(
                 modifier = Modifier,
@@ -173,18 +176,11 @@ fun OrderButton(
 }
 @Composable
 fun PriceSection(modifier: Modifier, price: Long) {
-    Column {
-        Text(
-            text = stringResource(id = R.string.lbl_total_price),
-            style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.secondary),
-            modifier = modifier
-        )
-        Text(
-            text = price.formatCurrency(),
-            style = MaterialTheme.typography.body1.copy(fontSize = 18.sp),
-            modifier = modifier
-        )
-    }
+    Text(
+        text = price.formatCurrency(),
+        style = FMTheme.typography.title.large,
+        modifier = modifier
+    )
 }
 @Composable
 fun IngredientsSection(
@@ -261,20 +257,21 @@ fun FoodNameSection(modifier: Modifier = Modifier, food: FoodModel) {
     ) {
         Text(
             text = food.name,
-            style = MaterialTheme.typography.body1,
+            style = FMTheme.typography.title.small.bold,
         )
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            RatingBar(
-                rating = food.rate
+            Icon(
+                imageVector = Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colors.primary,
+                modifier = Modifier.size(16.dp)
             )
             HSpacer(4)
             Text(
                 text = "${food.rate}",
-                style = MaterialTheme.typography.caption,
-                color = MaterialTheme.colors.secondary
+                style = FMTheme.typography.title.tiny.bold,
+                color = MaterialTheme.colors.onPrimary
             )
         }
     }
@@ -307,7 +304,7 @@ fun FoodDetailHeader(
 fun PreviewQtySection() {
     FoodMarketTheme {
         Row {
-            FoodQtySection(changeQty = {}, orderParams = OrderParams("1", 1, 10000.0))
+            FoodQtySection(changeQty = {}, orderParams = OrderParams(1, 1, 10000.0))
         }
     }
 }

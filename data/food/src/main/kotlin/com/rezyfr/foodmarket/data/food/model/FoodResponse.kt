@@ -42,7 +42,7 @@ data class FoodResponse(
                     picture = picturePath.orEmpty(),
                     name = name.orEmpty(),
                     desc = description.orEmpty(),
-                    ingredients = ingredients?.split("\\r\\n").orEmpty(),
+                    ingredients = ingredients?.split("\r\n").orEmpty(),
                     price = price?.toLongOrNull() ?: 0L,
                     rate = rate ?: 0.0,
                     types = types.orEmpty(),

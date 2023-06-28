@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.rezyfr.foodmarket.core.ui.theme.FMTheme
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 
 
@@ -86,7 +87,7 @@ fun FMButton(
         Text(
             text = text,
             color = type.textColor,
-            style = MaterialTheme.typography.button.copy(letterSpacing = 0.sp)
+            style = FMTheme.typography.body.moderate.demi
         )
     }
 }

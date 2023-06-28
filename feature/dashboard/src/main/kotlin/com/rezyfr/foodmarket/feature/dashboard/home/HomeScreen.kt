@@ -28,10 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.rezyfr.foodmarket.core.domain.model.PagingState
 import com.rezyfr.foodmarket.core.domain.model.PagingState.*
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
-import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithTrailingImage
+import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithTrailingContent
 import com.rezyfr.foodmarket.core.ui.component.HSpacer
 import com.rezyfr.foodmarket.core.ui.theme.FoodMarketTheme
 import com.rezyfr.foodmarket.domain.auth.model.UserDomainModel
@@ -119,9 +118,8 @@ fun Header(
     modifier: Modifier = Modifier,
     state: HomeViewState
 ) {
-    FMHeaderWithTrailingImage(
+    FMHeaderWithTrailingContent(
         headerText = "FoodMarket",
-        subtitleText = "Let's get some foods",
     ) {
         val url = if (state.profile is ViewResult.Success) state.profile.data.profilePhotoPath
             ?: state.profile.data.profilePhotoUrl

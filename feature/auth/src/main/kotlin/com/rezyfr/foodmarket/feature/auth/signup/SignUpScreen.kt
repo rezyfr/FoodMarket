@@ -87,7 +87,6 @@ fun SignUpContent(
         FMHeaderWithBackButton(
             onBackClicked = onBackClicked,
             headerText = stringResource(id = R.string.lbl_sign_up),
-            subtitleText = stringResource(id = R.string.lbl_sign_up_motto),
         )
         LazyColumn(){
             item {

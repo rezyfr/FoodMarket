@@ -71,7 +71,6 @@ fun PaymentContent(
     ) {
         FMHeaderWithBackButton(
             headerText = stringResource(id = R.string.lbl_payment),
-            subtitleText = stringResource(id = R.string.lbl_payment_subtitle),
             onBackClicked = navigateUp
         )
         Box(

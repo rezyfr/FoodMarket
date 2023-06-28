@@ -75,7 +75,6 @@ fun SignInContent(
     ) {
         FMHeader(
             headerText = stringResource(id = R.string.lbl_sign_in),
-            subtitleText = stringResource(id = R.string.lbl_sign_in_motto)
         )
         Box(
             modifier = Modifier

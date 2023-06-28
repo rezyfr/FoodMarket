@@ -1,5 +1,6 @@
 package com.rezyfr.foodmarket.feature.order.food
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,19 +17,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -40,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.rezyfr.foodmarket.core.domain.model.ViewResult
+import com.rezyfr.foodmarket.core.ui.component.FMHeaderWithTrailingContentAndBackButton
 import com.rezyfr.foodmarket.core.ui.component.HSpacer
 import com.rezyfr.foodmarket.core.ui.component.PrimaryButton
 import com.rezyfr.foodmarket.core.ui.component.RatingBar
@@ -74,7 +83,11 @@ fun FoodDetail(
     LaunchedEffect(key1 = true) {
         viewModel.effect.collectLatest {
             when (it) {
-                is FoodDetailViewEffect.OpenPaymentScreen -> openPayment(it.data, it.foodName, it.foodImage)
+                is FoodDetailViewEffect.OpenPaymentScreen -> openPayment(
+                    it.data,
+                    it.foodName,
+                    it.foodImage
+                )
             }
         }
     }
@@ -85,6 +98,7 @@ fun FoodDetail(
         openPayment = { viewModel.onEvent(FoodDetailEvent.OnOrderClicked) }
     )
 }
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun FoodDetailContent(
     state: FoodDetailViewState,
@@ -92,22 +106,27 @@ fun FoodDetailContent(
     changeQty: (Boolean) -> Unit = {},
     openPayment: () -> Unit = {}
 ) {
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        if (state.food is ViewResult.Success) {
+    Scaffold(
+        topBar = {
             FoodDetailHeader(
-                Modifier
-                    .align(Alignment.TopCenter)
-                    .height(maxHeight / 2),
                 navigateUp = navigateUp,
-                state.food.data
+                "KFC",
             )
-            FoodDetailBody(
-                Modifier.align(Alignment.BottomCenter),
-                changeQty,
-                openPayment,
-                state.food.data,
-                state.orderParams
-            )
+        }
+    ) {
+        Column(
+            Modifier
+                .fillMaxSize()
+        ) {
+            if (state.food is ViewResult.Success) {
+                FoodDetailBody(
+                    Modifier,
+                    changeQty,
+                    openPayment,
+                    state.food.data,
+                    state.orderParams
+                )
+            }
         }
     }
 }
@@ -120,43 +139,62 @@ fun FoodDetailBody(
     orderParams: OrderParams
 ) {
     Column(modifier.background(Color.White, RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))) {
+        Image(
+            painter = rememberAsyncImagePainter(model = data.picture),
+            contentDescription = null,
+            modifier = modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colors.secondary),
+            contentScale = ContentScale.FillBounds
+        )
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                .padding(top = 0.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             FoodNameSection(food = data)
             Spacer(modifier = Modifier.weight(1f))
-            FoodQtySection(
-                changeQty = changeQty,
-                orderParams = orderParams,
-            )
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colors.surface)
+            ) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        imageVector = Icons.Filled.FavoriteBorder,
+                        contentDescription = null,
+                        tint = MaterialTheme.colors.onSurface
+                    )
+                }
+            }
         }
         DescriptionSection(
             modifier = Modifier.padding(horizontal = 16.dp),
             desc = data.desc
         )
-        VSpacer(16)
+        VSpacer(24)
         IngredientsSection(
             modifier = Modifier.padding(horizontal = 16.dp),
             ingredients = data.ingredients
         )
-        VSpacer(24)
+        Spacer(modifier = Modifier.weight(1f))
         Row(
             Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
             PriceSection(
-                modifier = Modifier,
-                price = orderParams.total.toLong(),
+                modifier = Modifier.weight(1f),
+                price = data.price,
             )
             OrderButton(
                 onClick = { openPayment() },
-                isEnabled = orderParams.total > 0
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -164,22 +202,21 @@ fun FoodDetailBody(
 @Composable
 fun OrderButton(
     modifier: Modifier = Modifier,
-    isEnabled: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     PrimaryButton(
         modifier = modifier,
         text = stringResource(id = R.string.lbl_order_now),
         onClick = onClick,
-        enabled = isEnabled
     )
 }
 @Composable
 fun PriceSection(modifier: Modifier, price: Long) {
     Text(
         text = price.formatCurrency(),
-        style = FMTheme.typography.title.large,
-        modifier = modifier
+        style = FMTheme.typography.title.extraLarge,
+        modifier = modifier,
+        textAlign = TextAlign.Center
     )
 }
 @Composable
@@ -189,13 +226,15 @@ fun IngredientsSection(
 ) {
     Text(
         text = stringResource(id = R.string.lbl_ingredients),
-        style = MaterialTheme.typography.body2,
+        style = FMTheme.typography.title.large,
         modifier = modifier
     )
     VSpacer(4)
     Text(
         text = ingredients.joinToString(", "),
-        style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.secondary),
+        style = FMTheme.typography.title.tiny.demi.copy(
+            color = MaterialTheme.colors.onSurface
+        ),
         modifier = modifier
     )
 }
@@ -206,7 +245,7 @@ fun DescriptionSection(
 ) {
     Text(
         text = desc,
-        style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.secondary),
+        style = FMTheme.typography.body.moderate.regular,
         modifier = modifier,
         lineHeight = 26.sp
     )
@@ -257,14 +296,16 @@ fun FoodNameSection(modifier: Modifier = Modifier, food: FoodModel) {
     ) {
         Text(
             text = food.name,
-            style = FMTheme.typography.title.small.bold,
+            style = FMTheme.typography.title.extraLarge,
         )
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Filled.Star, contentDescription = null, tint = MaterialTheme.colors.primary,
+                imageVector = Icons.Filled.Star,
+                contentDescription = null,
+                tint = MaterialTheme.colors.primary,
                 modifier = Modifier.size(16.dp)
             )
             HSpacer(4)
@@ -278,26 +319,16 @@ fun FoodNameSection(modifier: Modifier = Modifier, food: FoodModel) {
 }
 @Composable
 fun FoodDetailHeader(
-    modifier: Modifier = Modifier,
     navigateUp: () -> Unit,
-    food: FoodModel,
+    foodName: String,
 ) {
-    Image(
-        painter = rememberAsyncImagePainter(model = food.picture),
-        contentDescription = null,
-        modifier = modifier
-            .background(MaterialTheme.colors.secondary)
-            .fillMaxWidth(),
-        contentScale = ContentScale.FillBounds
+    FMHeaderWithTrailingContentAndBackButton(
+        headerText = foodName,
+        trailingContent = {
+            Icon(imageVector = Icons.Outlined.MoreHoriz, contentDescription = null)
+        },
+        onBackClicked = navigateUp
     )
-    IconButton(onClick = navigateUp) {
-        Icon(
-            Icons.Filled.ChevronLeft,
-            contentDescription = null,
-            tint = Color.White,
-            modifier = Modifier.padding(24.dp).size(48.dp)
-        )
-    }
 }
 @Preview(showBackground = true)
 @Composable

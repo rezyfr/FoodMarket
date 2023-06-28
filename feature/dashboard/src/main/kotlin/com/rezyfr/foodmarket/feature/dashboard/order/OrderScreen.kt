@@ -68,7 +68,6 @@ private fun Header(
 ) {
     FMHeader(
         headerText = "Your Orders",
-        subtitleText = "Wait for the best meal",
     )
 }
 @Composable
